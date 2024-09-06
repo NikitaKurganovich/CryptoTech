@@ -8,4 +8,13 @@ data class MainScreenState(
     val messageInputFieldState: InputFieldState,
     val infoTextState: TextState,
     val resultTextState: TextState,
+    val currentMethod: Ciphers = Ciphers.Cesar
 )
+
+enum class Ciphers{
+    Cesar,
+    EasyReplacement,
+    Vigenere,
+    SimplePermutation,
+    ComplicatedPermutation
+}
