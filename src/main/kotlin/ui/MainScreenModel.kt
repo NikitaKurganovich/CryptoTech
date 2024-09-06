@@ -6,8 +6,7 @@ import dev.bababnanick.crypto_decoding.generated.resources.*
 import dev.bababnanick.crypto_decoding.generated.resources.Res
 import dev.bababnanick.crypto_decoding.generated.resources.empty
 import dev.bababnanick.crypto_decoding.generated.resources.result
-import domain.releazation.CesarCipher
-import domain.releazation.StringIntCipherKey
+import domain.CipherFabric
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -75,29 +74,31 @@ class MainScreenModel : ScreenModel {
         }
     }
 
-    fun onEncrypt() {
-        StringIntCipherKey(
-            value = state.value.keyInputFieldState.value
-        ).formatKey()
-            .onSuccess { keyValue ->
-                CesarCipher(
-                    message = state.value.messageInputFieldState.value,
-                    key = keyValue
-                ).encrypt()
-                    .onSuccess { value ->
-                        setSuccessfulResult(value)
-                    }
-                    .onFailure { err ->
-                        screenModelScope.launch {
-                            setErrorResult(err.message ?: getString(Res.string.unspecified_error))
-                        }
-                    }
-            }.onFailure { err ->
-                screenModelScope.launch {
-                    setErrorResult(err.message ?: getString(Res.string.unspecified_error))
-                }
-            }
+    fun onCipherChange(cipher: Ciphers) {
+        _state.update {
+            it.copy(
+                currentMethod = cipher
+            )
+        }
+        resetResultField()
+    }
 
+    fun onEncrypt() {
+        CipherFabric(
+            cipher = state.value.currentMethod,
+            key = state.value.keyInputFieldState.value,
+            message = state.value.messageInputFieldState.value
+        ).createCipher()
+            .onSuccess { value ->
+                value.encrypt().onSuccess { setSuccessfulResult(it) }
+            }
+            .onFailure { err -> setError(err) }
+    }
+
+    private fun setError(err: Throwable) {
+        screenModelScope.launch {
+            setErrorResult(err.message ?: getString(Res.string.unspecified_error))
+        }
     }
 
     private fun setSuccessfulResult(value: String) {
@@ -134,5 +135,4 @@ class MainScreenModel : ScreenModel {
             }
         }
     }
-
 }
