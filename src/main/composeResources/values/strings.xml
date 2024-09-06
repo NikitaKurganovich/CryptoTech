@@ -12,12 +12,4 @@
     <string name="empty"> </string>
     <string name="unspecified_error">Something went wrong. Please try again</string>
 
-    <string-array name="ciphers">
-        <item>Cesar</item>
-        <item>Easy replacement</item>
-        <item>Vigenere cipher</item>
-        <item>Simple permutation</item>
-        <item>Complicated permutation</item>
-    </string-array>
-
 </resources>

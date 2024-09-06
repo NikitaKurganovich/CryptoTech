@@ -14,10 +14,8 @@ import androidx.compose.ui.text.style.TextAlign
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import dev.bababnanick.crypto_decoding.generated.resources.Res
-import dev.bababnanick.crypto_decoding.generated.resources.ciphers
 import dev.bababnanick.crypto_decoding.generated.resources.encrypt
 import dev.bababnanick.crypto_decoding.generated.resources.welcome
-import org.jetbrains.compose.resources.stringArrayResource
 import org.jetbrains.compose.resources.stringResource
 import ui.components.CipherOutlinedTextField
 import ui.components.TextFieldLabel
@@ -49,7 +47,8 @@ class MainScreen : Screen {
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             CipherMethodSelection(
-                modifier = Modifier.fillMaxWidth(0.4f)
+                modifier = Modifier.fillMaxWidth(0.4f),
+                onCipherMethodChange = remember { model::onCipherChange }
             )
             WorkingArea(
                 modifier = Modifier.fillMaxWidth(0.6f),
@@ -62,12 +61,13 @@ class MainScreen : Screen {
     @Composable
     private fun CipherMethodSelection(
         modifier: Modifier = Modifier,
+        onCipherMethodChange: (Ciphers) -> Unit,
     ) {
+        val options = Ciphers.entries
         Column(
             modifier = modifier
         ) {
-            val options = stringArrayResource(Res.array.ciphers)
-            val (selectedOption, onOptionSelected) = remember { mutableStateOf(options.first() ) }
+            val (selectedOption, onOptionSelected) = remember { mutableStateOf(options.first()) }
 
             options.forEach { cipher ->
                 Row(
@@ -77,6 +77,7 @@ class MainScreen : Screen {
                         .selectable(
                             selected = (cipher == selectedOption),
                             onClick = {
+                                onCipherMethodChange(cipher)
                                 onOptionSelected(cipher)
                             }
                         )
@@ -88,7 +89,7 @@ class MainScreen : Screen {
                         onClick = { onOptionSelected(cipher) }
                     )
                     Text(
-                        text = cipher,
+                        text = cipher.cipher,
                         style = CipherTheme.typography.bold.merge(),
                         modifier = Modifier.padding(start = CipherTheme.dimensions.smallDefault)
                     )
@@ -131,11 +132,7 @@ class MainScreen : Screen {
             Button(
                 modifier = Modifier
                     .padding(CipherTheme.dimensions.mediumMinus),
-                onClick = remember {
-                    {
-                        model.onEncrypt()
-                    }
-                }
+                onClick = remember { model::onEncrypt }
             ) {
                 Text(
                     modifier = Modifier,

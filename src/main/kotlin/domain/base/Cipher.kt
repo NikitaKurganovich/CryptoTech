@@ -1,7 +1,6 @@
 package domain.base
 
-interface Cipher<T> {
+interface Cipher<T>: Encryptable {
     val message: String
     val key: T
-    fun encrypt(): Result<String>
 }
