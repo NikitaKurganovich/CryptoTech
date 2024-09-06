@@ -32,7 +32,6 @@ class CesarCipherTest {
             .assert(Result.success("abc"))
     }
 
-
     @Test
     fun `message with spaces`() = runBlocking {
         TestThat(
