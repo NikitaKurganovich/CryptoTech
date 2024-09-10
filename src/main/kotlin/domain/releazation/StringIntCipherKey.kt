@@ -17,5 +17,4 @@ class StringIntCipherKey(override val value: String) : CipherKey<String, Int> {
             }
         }
     }
-
 }
