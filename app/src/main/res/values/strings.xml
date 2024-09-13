@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Crypto Decoding</string>
+
+    <string name="format_error">Only a-z characters allowed</string>
+    <string name="welcome">Enter a message and a key</string>
+
+    <string name="result">Result:</string>
+
+    <string name="letters_warning">Error: Only letters in message field are allowed</string>
+
+    <string name="encrypt">Encrypt</string>
+
+    <string name="empty"> </string>
+    <string name="unspecified_error">Something went wrong. Please try again</string>
+
+</resources>
