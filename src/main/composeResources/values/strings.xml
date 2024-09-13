@@ -6,6 +6,8 @@
 
     <string name="letters_warning">Error: Only letters in message field are allowed</string>
     <string name="numbers_warning">Error: Only numbers in key field are allowed for this cipher method</string>
+    <string name="empty_warning">Error: Message field can't me empty</string>
+    <string name="key_length_warning">Error: Length of key is not correct</string>
 
     <string name="encrypt">Encrypt</string>
 

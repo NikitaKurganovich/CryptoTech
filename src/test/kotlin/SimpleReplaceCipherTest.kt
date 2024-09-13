@@ -1,5 +1,7 @@
-import domain.releazation.CesarCipher
+import dev.bababnanick.crypto_decoding.generated.resources.Res
 import domain.releazation.SimpleReplaceCipher
+import kotlinx.coroutines.runBlocking
+import org.jetbrains.compose.resources.getString
 import kotlin.test.Test
 
 class SimpleReplaceCipherTest {
@@ -21,6 +23,4 @@ class SimpleReplaceCipherTest {
         TestThat(SimpleReplaceCipher("xyz", "XFQABOLYWJGPMRVIHUSDZKNTEC").encrypt())
             .assert(Result.success("tec"))
     }
-
-    
 }
