@@ -32,6 +32,7 @@ class CipherFabric(
                 message = message,
                 key = ComplicatedPermutationCipherKey(key).formatKey().getOrThrow()
             )
+
             //ComplicatedPermutationCipher(message, key)
         }
     }
