@@ -8,17 +8,17 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import dev.example.crypto.ui.states.implementation.InputFieldStateImpl
+import dev.example.crypto.ui.states.implementation.FieldStateImpl
 import dev.example.crypto.ui.states.implementation.TextStateImpl
 
 class MainScreenViewModel : ViewModel() {
     private val _state: MutableStateFlow<MainScreenState> = MutableStateFlow(
         MainScreenState(
-            keyInputFieldState = InputFieldStateImpl(
+            keyInputFieldState = FieldStateImpl(
                 value = "",
                 label = "Key"
             ),
-            messageInputFieldState = InputFieldStateImpl(
+            messageInputFieldState = FieldStateImpl(
                 value = "",
                 label = "Message"
             ),

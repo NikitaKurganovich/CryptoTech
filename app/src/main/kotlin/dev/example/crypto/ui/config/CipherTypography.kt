@@ -2,8 +2,26 @@ package dev.example.crypto.ui.config
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.googlefonts.Font
+import androidx.compose.ui.text.googlefonts.GoogleFont
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.sp
+import dev.example.crypto.R
+
+val provider = GoogleFont.Provider(
+    providerAuthority = "com.google.android.gms.fonts",
+    providerPackage = "com.google.android.gms",
+    certificates = R.array.com_google_android_gms_fonts_certs
+)
+
+val fontName = GoogleFont("Sarpanch")
+
+val fontFamily = FontFamily(
+    Font(googleFont = fontName, fontProvider = provider)
+)
 
 @Immutable
 data class CipherTypography(
@@ -13,10 +31,15 @@ data class CipherTypography(
 
 val cipherTypography = CipherTypography(
     default = TextStyle(
-        fontSize = 16.sp
+        fontSize = 18.sp,
+        lineHeight = 20.sp,
+        fontWeight = FontWeight.W500,
+        letterSpacing = TextUnit(value = 0.01f, type = TextUnitType.Em),
+        fontFamily = fontFamily
     ),
     bold = TextStyle(
         fontSize = 16.sp,
-        fontWeight = FontWeight.Bold
+        fontWeight = FontWeight.Bold,
+        fontFamily = fontFamily
     )
 )

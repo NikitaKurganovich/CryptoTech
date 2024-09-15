@@ -9,3 +9,11 @@ val LocalCipherDimensions = staticCompositionLocalOf<CipherDimensions> {
 val LocalCipherTypography = staticCompositionLocalOf<CipherTypography> {
     error("No CipherTypography provided")
 }
+
+val LocalCipherColors = staticCompositionLocalOf<CipherColors> {
+    error("No CipherColors provided")
+}
+
+val LocalCipherViewDimensions = staticCompositionLocalOf<CipherViewDimensions> {
+    error("No CipherViewDimensions provided")
+}

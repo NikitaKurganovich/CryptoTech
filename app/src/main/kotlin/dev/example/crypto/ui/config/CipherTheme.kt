@@ -9,9 +9,13 @@ fun CipherTheme(
 ) {
     val cipherDimensions = cipherDimensions
     val cipherTypography = cipherTypography
+    val cipherColors = cipherColors
+    val cipherViewDimensions = StandardViewDimen
     CompositionLocalProvider(
         LocalCipherDimensions provides cipherDimensions,
         LocalCipherTypography provides cipherTypography,
+        LocalCipherColors provides cipherColors,
+        LocalCipherViewDimensions provides cipherViewDimensions,
         content = content
     )
 }
@@ -24,4 +28,12 @@ object CipherTheme {
     val typography: CipherTypography
         @Composable
         get() = LocalCipherTypography.current
+
+    val colors: CipherColors
+        @Composable
+        get() = LocalCipherColors.current
+
+    val viewDimensions: CipherViewDimensions
+        @Composable
+        get() = StandardViewDimen
 }
