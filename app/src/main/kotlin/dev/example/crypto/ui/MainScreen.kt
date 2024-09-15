@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.Button
@@ -24,9 +24,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -37,10 +37,11 @@ import dev.example.crypto.R
 import dev.example.crypto.ui.components.CipherOutlinedTextField
 import dev.example.crypto.ui.components.CipherText
 import dev.example.crypto.ui.components.CipherTextWithBord
+import dev.example.crypto.ui.components.EdgeValues
+import dev.example.crypto.ui.components.customBorder
 import dev.example.crypto.ui.config.CipherTheme
 import dev.example.crypto.ui.states.base.TextState
 import dev.example.crypto.ui.states.implementation.FieldStateImpl
-import dev.example.crypto.ui.states.implementation.TextStateImpl
 
 @Composable
 fun MainScreen(
@@ -76,10 +77,13 @@ private fun ScreenContent(
             .fillMaxSize()
             .padding(CipherTheme.dimensions.mediumDefault),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceEvenly
+        verticalArrangement = Arrangement.Bottom
     ) {
         WorkingArea(
-            modifier = Modifier,
+            modifier = Modifier.padding(
+                vertical = CipherTheme.dimensions.smallDefault
+                    .plus(CipherTheme.dimensions.smallMinus)
+            ),
             model = model,
             state = state
         )
@@ -123,37 +127,52 @@ private fun CipherMethodSelection(
     )
     val angle by animateFloatAsState(targetValue = if (expanded) 180f else 0f, label = "")
     val icon = rememberVectorPainter(image = Icons.Default.KeyboardArrowDown)
-    Column(modifier = modifier) {
-        CipherTextWithBord(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable {
-                    expanded = true
-                },
-            textState = textState,
-            trailingIcon = {
-                Icon(
-                    modifier = Modifier
-                        .padding(
-                            horizontal = CipherTheme.dimensions.mediumDefault
-                        )
-                        .rotate(angle),
-                    painter = icon,
-                    contentDescription = null,
-                    tint = CipherTheme.colors.iconTint
-                )
-            }
-        )
+    CipherTextWithBord(
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable { expanded = true },
+        textState = textState,
+        trailingIcon = {
+            Icon(
+                modifier = Modifier
+                    .padding(horizontal = CipherTheme.dimensions.mediumDefault)
+                    .rotate(angle),
+                painter = icon,
+                contentDescription = null,
+                tint = CipherTheme.colors.iconTint
+            )
+        }
+    )
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentSize(Alignment.Center)
+            .padding(
+                horizontal = CipherTheme.dimensions.mediumDefault,
+                vertical = CipherTheme.dimensions.smallPlus + CipherTheme.dimensions.smallMinus
+            ),
+        contentAlignment = Alignment.CenterEnd
+    ) {
         DropdownMenu(
+            modifier = Modifier
+                .padding(horizontal = CipherTheme.dimensions.mediumDefault)
+                .fillMaxWidth()
+                .customBorder(
+                    edgeColor = CipherTheme.colors.borderCorner,
+                    innerColor = CipherTheme.colors.border,
+                    width = CipherTheme.viewDimensions.borderWidth,
+                    edges = EdgeValues(
+                        vertical = CipherTheme.viewDimensions.dropdownCornerEdgeHeight,
+                        horizontal = CipherTheme.viewDimensions.dropdownCornerEdgeWidth
+                    )
+                ),
             expanded = expanded,
             onDismissRequest = { expanded = false },
-            modifier = Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(CipherTheme.dimensions.smallDefault))
-                .padding(horizontal = CipherTheme.dimensions.smallDefault)
+            containerColor = Color.Transparent,
         ) {
             options.forEach { cipher ->
                 DropdownMenuItem(
+                    modifier = Modifier.padding(horizontal = CipherTheme.dimensions.smallDefault),
                     onClick = {
                         onCipherMethodChange(cipher)
                         onOptionSelected(cipher)
@@ -162,7 +181,8 @@ private fun CipherMethodSelection(
                     text = {
                         Text(
                             text = cipher.cipher,
-                            style = CipherTheme.typography.bold.merge()
+                            style = CipherTheme.typography.default,
+                            color = CipherTheme.colors.text
                         )
                     }
                 )
@@ -181,17 +201,10 @@ private fun WorkingArea(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        CipherText(
-            modifier = Modifier,
-            textState = TextStateImpl(
-                label = stringResource(R.string.welcome),
-                isError = false,
-            )
-        )
         CipherOutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = CipherTheme.dimensions.mediumMinus),
+                .padding(bottom = CipherTheme.dimensions.mediumMinus),
             inputFieldState = state.messageInputFieldState,
             onValueChange = { newValue ->
                 model.onMessageFieldValueChange(newValue)
@@ -206,7 +219,7 @@ private fun WorkingArea(
         CipherOutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = CipherTheme.dimensions.mediumMinus),
+                .padding(top = CipherTheme.dimensions.mediumMinus),
             inputFieldState = state.keyInputFieldState,
             onValueChange = { newValue ->
                 model.onKeyFieldValueChange(newValue)

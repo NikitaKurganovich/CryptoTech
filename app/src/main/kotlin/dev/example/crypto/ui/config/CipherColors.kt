@@ -7,7 +7,7 @@ import androidx.compose.ui.graphics.Color
 data class CipherColors(
     val border: Color,
     val borderCorner: Color,
-    val background: Color,
+    val transparentBackground: Color,
     val text: Color,
     val hint: Color,
     val iconTint: Color,
@@ -21,7 +21,7 @@ data class CipherColors(
 val cipherColors = CipherColors(
     border = Color(0x3623E34C),
     borderCorner = Color(0xC723E34C),
-    background = Color(0xFFFFFFFF),
+    transparentBackground = Color(0x3B000000),
     text = Color(0xFFFFFFFF),
     hint = Color(0x44FFFFFF),
     iconTint = Color(0xFF23E34C),
