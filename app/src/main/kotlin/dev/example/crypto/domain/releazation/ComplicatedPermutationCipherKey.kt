@@ -1,5 +1,6 @@
 package dev.example.crypto.domain.releazation
 
+import dev.example.crypto.domain.Strings.length_warning
 import dev.example.crypto.domain.Strings.numbers_warning
 import dev.example.crypto.domain.base.CipherKey
 import kotlinx.coroutines.runBlocking
@@ -23,8 +24,8 @@ class ComplicatedPermutationCipherKey(override val value: String) :
         }
     }
 
-    fun generateRandomList(n: Int): List<Int> {
-        require(n > 1) { "Length of key must be more than 1" }
+    private fun generateRandomList(n: Int): List<Int> {
+        require(n > 1) { length_warning }
         val list = (1..n).toMutableList()
         list.shuffle(Random)
         return list
@@ -32,7 +33,7 @@ class ComplicatedPermutationCipherKey(override val value: String) :
 
     // 1. add exception for this parsing
     // 2. input format is "n m"
-    fun parseStringToPair(input: String): Pair<Int, Int> {
+    private fun parseStringToPair(input: String): Pair<Int, Int> {
         val (first, second) = input.split(" ").map { it.toInt() }
         return Pair(first, second)
     }

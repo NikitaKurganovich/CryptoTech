@@ -1,10 +1,7 @@
 package dev.example.crypto.domain.releazation
 
-import dev.example.crypto.domain.Strings.format_error
 import dev.example.crypto.domain.base.Cipher
-import dev.example.crypto.domain.Regexes
-import dev.example.crypto.domain.Strings.empty_warning
-import kotlinx.coroutines.runBlocking
+import dev.example.crypto.domain.checkMessage
 
 class SimpleReplaceCipher(
     override val message: String,
@@ -13,16 +10,9 @@ class SimpleReplaceCipher(
     private val alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
     override fun encrypt(): Result<String> = runCatching {
-        when {
-            message.contains(Regexes.specialCharacters) -> runBlocking {
-                error(format_error)
-            }
-
-            message.isEmpty() -> runBlocking {
-                error(empty_warning)
-            }
-
-            else -> {
+        checkMessage(
+            message = message,
+            block = {
                 message.map { char ->
                     val isLowerCase = char.isLowerCase()
                     val index = alphabet.indexOf(char.uppercaseChar())
@@ -34,6 +24,6 @@ class SimpleReplaceCipher(
                     }
                 }.joinToString("")
             }
-        }
+        )
     }
 }

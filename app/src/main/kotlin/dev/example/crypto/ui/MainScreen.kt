@@ -210,7 +210,8 @@ private fun CipherMethodSelection(
                     edges = EdgeValues(
                         vertical = CipherTheme.viewDimensions.dropdownCornerEdgeHeight,
                         horizontal = CipherTheme.viewDimensions.dropdownCornerEdgeWidth
-                    )
+                    ),
+                    background = CipherTheme.colors.dropdownBackground
                 ),
             expanded = expanded,
             onDismissRequest = { expanded = false },
@@ -288,7 +289,11 @@ private fun WorkingArea(
                 )
             },
             trailIcon = {
-                IconButton(onClick = { expanded = true }) {
+                IconButton(
+                    modifier = Modifier.
+                        padding(horizontal = CipherTheme.dimensions.smallDefault),
+                    onClick = { expanded = true }
+                ) {
                     Icon(
                         imageVector = Icons.TwoTone.Info,
                         contentDescription = null,

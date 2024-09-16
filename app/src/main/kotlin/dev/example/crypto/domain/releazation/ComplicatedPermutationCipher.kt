@@ -1,33 +1,21 @@
 package dev.example.crypto.domain.releazation
 
-import dev.example.crypto.domain.Regexes
-import dev.example.crypto.domain.Strings.empty_warning
-import dev.example.crypto.domain.Strings.format_error
+import dev.example.crypto.domain.AdditionCheck
 import dev.example.crypto.domain.Strings.key_length_warning
 import dev.example.crypto.domain.base.Cipher
-import kotlinx.coroutines.runBlocking
+import dev.example.crypto.domain.checkMessage
 
 class ComplicatedPermutationCipher(
     override val message: String,
     override val key: Pair<List<Int>, List<Int>>,
 ) : Cipher<Pair<List<Int>, List<Int>>> {
     override fun encrypt(): Result<String> = runCatching {
-        when {
-            message.contains(Regexes.specialCharacters) -> runBlocking {
-                error(format_error)
-            }
-
-            message.isEmpty() -> runBlocking {
-                error(empty_warning)
-            }
-
-            key.first.size * key.second.size != message.length -> {
-                runBlocking {
-                    error(key_length_warning)
-                }
-            }
-
-            else -> {
+        checkMessage(
+            AdditionCheck(
+                key.first.size * key.second.size != message.length
+            ) { error(key_length_warning) },
+            message = message,
+            block = {
                 val (key1, key2) = key
                 val groupSize = key1.size
                 val groups = message.chunked(groupSize)
@@ -51,6 +39,6 @@ class ComplicatedPermutationCipher(
 
                 reorderedGroups.joinToString("")
             }
-        }
+        )
     }
 }

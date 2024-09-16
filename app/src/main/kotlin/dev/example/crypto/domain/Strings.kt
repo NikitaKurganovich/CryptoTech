@@ -10,6 +10,8 @@ object Strings {
     const val numbers_warning =
         "Error: Only numbers in key field are allowed for this cipher method"
 
+    const val length_warning = "Length of key must be more than 1"
+
     const val results = "Results:"
 
     const val unspecified_error = "Something went wrong. Please try again"

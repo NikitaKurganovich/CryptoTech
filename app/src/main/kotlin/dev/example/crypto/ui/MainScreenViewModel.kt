@@ -84,6 +84,7 @@ class MainScreenViewModel : ViewModel() {
         ).createCipher()
             .onSuccess { value ->
                 value.encrypt().onSuccess { setSuccessfulResult(it) }
+                    .onFailure { err -> setError(err) }
             }
             .onFailure { err -> setError(err) }
     }

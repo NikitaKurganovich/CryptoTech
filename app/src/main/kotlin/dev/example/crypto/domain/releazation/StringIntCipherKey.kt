@@ -1,5 +1,6 @@
 package dev.example.crypto.domain.releazation
 
+import dev.example.crypto.domain.Strings.numbers_warning
 import dev.example.crypto.domain.base.CipherKey
 
 class StringIntCipherKey(override val value: String) : CipherKey<String, Int> {
@@ -8,7 +9,7 @@ class StringIntCipherKey(override val value: String) : CipherKey<String, Int> {
         try {
             value.toInt()
         } catch (e: Exception) {
-            error("Error: Only numbers in key field are allowed for this cipher method")
+            error(numbers_warning)
         }
     }
 }
