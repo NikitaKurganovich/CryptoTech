@@ -18,8 +18,20 @@ interface CipherViewDimensions{
 
     val borderWidth: Dp
 
+    val popupButtonBorderWidth: Dp
+
     val fieldBaseHeight: Dp
     val fieldBaseWidth: Dp
+
+    val buttonVerticalPadding: Dp
+
+    val resultBottomIndent: Dp
+
+    val resultFieldWidth: Dp
+    val resultFieldHeight: Dp
+
+    val popupButtonWidth: Dp
+    val popupButtonHeight: Dp
 }
 
 
@@ -47,9 +59,28 @@ object StandardViewDimen: CipherViewDimensions{
     override val borderWidth: Dp
         get() = 3.dp
 
+    override val popupButtonBorderWidth: Dp
+        get() = 1.dp
+
     override val fieldBaseHeight: Dp
         get() = 56.dp
 
     override val fieldBaseWidth: Dp
         get() = 300.dp
+
+    override val buttonVerticalPadding: Dp
+        get() = 60.dp
+
+    override val resultBottomIndent: Dp
+        get() = 155.dp
+
+    override val resultFieldWidth: Dp
+        get() = 300.dp
+    override val resultFieldHeight: Dp
+        get() = 106.dp
+
+    override val popupButtonWidth: Dp
+        get() = 125.dp
+    override val popupButtonHeight: Dp
+        get() = 48.dp
 }

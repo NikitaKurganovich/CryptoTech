@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import dev.example.crypto.ui.config.CipherTheme
 import dev.example.crypto.ui.states.base.TextState
@@ -55,15 +56,15 @@ fun CipherTextWithBord(
 fun CipherText(
     modifier: Modifier = Modifier,
     textState: TextState,
-    textStyle: TextStyle = CipherTheme.typography.default
+    textStyle: TextStyle = CipherTheme.typography.default,
+    color: Color = CipherTheme.colors.text
 ) {
     Text(
         modifier = modifier,
         text = textState.label,
         color = if(textState.isError) CipherTheme.colors.textError
-        else CipherTheme.colors.text,
+        else color,
         style = textStyle
-
     )
 }
 

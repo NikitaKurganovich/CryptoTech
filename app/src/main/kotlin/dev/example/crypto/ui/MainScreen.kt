@@ -1,6 +1,10 @@
 package dev.example.crypto.ui
 
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -8,15 +12,23 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.twotone.Info
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,14 +36,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.example.crypto.R
 import dev.example.crypto.ui.components.CipherOutlinedTextField
@@ -42,6 +59,7 @@ import dev.example.crypto.ui.components.customBorder
 import dev.example.crypto.ui.config.CipherTheme
 import dev.example.crypto.ui.states.base.TextState
 import dev.example.crypto.ui.states.implementation.FieldStateImpl
+import dev.example.crypto.ui.states.implementation.TextStateImpl
 
 @Composable
 fun MainScreen(
@@ -49,6 +67,20 @@ fun MainScreen(
     model: MainScreenViewModel = viewModel()
 ) {
     val state by model.state.collectAsState()
+    val widthInDp = CipherTheme.viewDimensions.borderWidth
+    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+    var width by remember { mutableStateOf(widthInDp) }
+    val animatedWidth by animateDpAsState(
+        targetValue = width,
+        animationSpec = tween(
+            durationMillis = 2000,
+            easing = FastOutSlowInEasing
+        ),
+        label = ""
+    )
+
+    LaunchedEffect(Unit) { width = screenWidth }
+
     Box(
         modifier = with(Modifier) {
             fillMaxSize()
@@ -59,7 +91,9 @@ fun MainScreen(
 
         }) {
         ScreenContent(
-            modifier = modifier,
+            modifier = modifier
+                .width(animatedWidth)
+                .clipToBounds(),
             model = model,
             state = state
         )
@@ -93,17 +127,29 @@ private fun ScreenContent(
         )
         Button(
             modifier = Modifier
-                .padding(CipherTheme.dimensions.mediumMinus),
-            onClick = remember { model::onEncrypt }
+                .fillMaxWidth()
+                .padding(vertical = CipherTheme.viewDimensions.buttonVerticalPadding)
+                .size(
+                    height = CipherTheme.viewDimensions.fieldBaseHeight,
+                    width = CipherTheme.viewDimensions.fieldBaseWidth
+                ),
+            shape = CutCornerShape(Dp.Hairline),
+            onClick = remember { model::onEncrypt },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = CipherTheme.colors.buttonFilled
+            )
         ) {
             Text(
                 modifier = Modifier,
                 textAlign = TextAlign.Center,
-                text = stringResource(R.string.encrypt)
+                text = stringResource(R.string.encrypt),
+                color = CipherTheme.colors.text,
+                style = CipherTheme.typography.default
             )
         }
         ResultView(
-            modifier = Modifier,
+            modifier = Modifier
+                .padding(bottom = CipherTheme.viewDimensions.resultBottomIndent),
             infoTextState = state.infoTextState,
             resultTextState = state.resultTextState
         )
@@ -197,6 +243,17 @@ private fun WorkingArea(
     model: MainScreenViewModel,
     state: MainScreenState,
 ) {
+    val keyString = state.keyInputFieldState.aboutKey
+    val aboutKey by remember(state.keyInputFieldState) { mutableStateOf(keyString) }
+    var expanded by remember { mutableStateOf(false) }
+    if (expanded) Dialog(onDismissRequest = { expanded = false }) {
+        InfoPopup(
+            headerText = stringResource(id = R.string.key_header),
+            contentText = aboutKey,
+            buttonText = stringResource(id = R.string.ok),
+            onDismiss = { expanded = false }
+        )
+    }
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -229,6 +286,15 @@ private fun WorkingArea(
                     text = state.keyInputFieldState.label,
                     style = CipherTheme.typography.default
                 )
+            },
+            trailIcon = {
+                IconButton(onClick = { expanded = true }) {
+                    Icon(
+                        imageVector = Icons.TwoTone.Info,
+                        contentDescription = null,
+                        tint = CipherTheme.colors.iconTint
+                    )
+                }
             }
         )
     }
@@ -247,14 +313,103 @@ private fun ResultView(
         CipherText(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(CipherTheme.dimensions.smallDefault),
+                .padding(bottom = CipherTheme.dimensions.smallPlus),
             textState = infoTextState
         )
+        CipherTextWithBord(
+            modifier = Modifier
+                .fillMaxWidth()
+                .size(
+                    width = CipherTheme.viewDimensions.resultFieldWidth,
+                    height = CipherTheme.viewDimensions.resultFieldHeight
+                )
+                .padding(top = CipherTheme.dimensions.smallPlus),
+            textState = resultTextState
+        )
+    }
+}
+
+@Composable
+fun InfoPopup(
+    modifier: Modifier = Modifier,
+    headerText: String,
+    contentText: String,
+    buttonText: String,
+    onDismiss: () -> Unit = {},
+) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .customBorder(
+                edgeColor = CipherTheme.colors.borderCorner,
+                innerColor = CipherTheme.colors.border,
+                width = CipherTheme.viewDimensions.borderWidth,
+                edges = EdgeValues(
+                    vertical = CipherTheme.viewDimensions.popupCornerEdgeHeight,
+                    horizontal = CipherTheme.viewDimensions.popupCornerEdgeWidth
+                ),
+                background = CipherTheme.colors.popupBackground
+            ),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
         CipherText(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(CipherTheme.dimensions.smallDefault),
-            textState = resultTextState
+                .padding(
+                    vertical = CipherTheme.dimensions.mediumDefault,
+                    horizontal = CipherTheme.dimensions.largeDefault
+                ),
+            textState = TextStateImpl(
+                label = headerText,
+                isError = false
+            ),
+            textStyle = CipherTheme.typography.default.copy(
+                textAlign = TextAlign.Left
+            )
         )
+        HorizontalDivider(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = CipherTheme.dimensions.largeDefault),
+            thickness = CipherTheme.dimensions.smallMinus,
+            color = CipherTheme.colors.borderCorner
+        )
+        CipherText(
+            modifier = Modifier.padding(
+                vertical = CipherTheme.dimensions.mediumDefault,
+                horizontal = CipherTheme.dimensions.largeDefault
+            ),
+            textState = TextStateImpl(
+                label = contentText,
+                isError = false
+            )
+        )
+        Button(
+            modifier = Modifier
+                .padding(vertical = CipherTheme.dimensions.mediumPlus)
+                .size(
+                    height = CipherTheme.viewDimensions.popupButtonHeight,
+                    width = CipherTheme.viewDimensions.popupButtonWidth
+                )
+                .border(
+                    width = CipherTheme.viewDimensions.popupButtonBorderWidth,
+                    color = CipherTheme.colors.border,
+                    shape = CutCornerShape(Dp.Hairline)
+                ),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = CipherTheme.colors.transparentBackground
+            ),
+            shape = CutCornerShape(Dp.Hairline),
+            onClick = onDismiss
+        ) {
+            CipherText(
+                textState = TextStateImpl(
+                    label = buttonText,
+                    isError = false
+                ),
+                color = CipherTheme.colors.buttonFilled
+            )
+        }
     }
 }

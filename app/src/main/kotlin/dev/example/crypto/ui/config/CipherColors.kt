@@ -15,7 +15,8 @@ data class CipherColors(
     val buttonFilled: Color,
     val buttonTransparent: Color,
     val fieldBackground: Color,
-    val textError: Color
+    val textError: Color,
+    val popupBackground: Color
 )
 
 val cipherColors = CipherColors(
@@ -29,5 +30,6 @@ val cipherColors = CipherColors(
     buttonFilled = Color(0xFF23E34C),
     buttonTransparent = Color(0x1523E34C),
     fieldBackground = Color(0x1523E34C),
-    textError = Color(0xFFFF0000)
+    textError = Color(0xFFFF0000),
+    popupBackground = Color(0x3B23E34C)
 )

@@ -1,10 +1,11 @@
 package dev.example.crypto.ui
 
 import dev.example.crypto.ui.states.base.FieldState
+import dev.example.crypto.ui.states.base.KeyFieldState
 import dev.example.crypto.ui.states.base.TextState
 
 data class MainScreenState(
-    val keyInputFieldState: FieldState,
+    val keyInputFieldState: KeyFieldState,
     val messageInputFieldState: FieldState,
     val infoTextState: TextState,
     val resultTextState: TextState,

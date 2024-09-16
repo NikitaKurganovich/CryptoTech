@@ -2,28 +2,34 @@ package dev.example.crypto.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dev.example.crypto.R
 import dev.example.crypto.domain.CipherFabric
+import dev.example.crypto.domain.Strings.results
+import dev.example.crypto.domain.Strings.unspecified_error
+import dev.example.crypto.domain.findRes
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import dev.example.crypto.ui.states.implementation.FieldStateImpl
+import dev.example.crypto.ui.states.implementation.KeyFieldStateImpl
 import dev.example.crypto.ui.states.implementation.TextStateImpl
 
 class MainScreenViewModel : ViewModel() {
     private val _state: MutableStateFlow<MainScreenState> = MutableStateFlow(
         MainScreenState(
-            keyInputFieldState = FieldStateImpl(
+            keyInputFieldState = KeyFieldStateImpl(
                 value = "",
-                label = "Key"
+                label = "Key",
+                aboutKeyId = R.string.about_cesar_key
             ),
             messageInputFieldState = FieldStateImpl(
                 value = "",
                 label = "Message"
             ),
             infoTextState = TextStateImpl(
-                label = "",
+                label = results,
                 isError = false
             ),
             resultTextState = TextStateImpl(
@@ -33,17 +39,6 @@ class MainScreenViewModel : ViewModel() {
         )
     )
     val state: StateFlow<MainScreenState> = _state.asStateFlow()
-
-    init {
-        _state.update {
-            it.copy(
-                infoTextState = TextStateImpl(
-                    label = "Enter a message and a key",
-                    isError = false
-                )
-            )
-        }
-    }
 
     fun onKeyFieldValueChange(
         newValue: String,
@@ -70,7 +65,12 @@ class MainScreenViewModel : ViewModel() {
     fun onCipherChange(cipher: Ciphers) {
         _state.update {
             it.copy(
-                currentMethod = cipher
+                currentMethod = cipher,
+                keyInputFieldState = KeyFieldStateImpl(
+                    value = it.keyInputFieldState.value,
+                    label = it.keyInputFieldState.label,
+                    aboutKeyId = findRes(cipher)
+                )
             )
         }
         resetResultField()
@@ -90,7 +90,7 @@ class MainScreenViewModel : ViewModel() {
 
     private fun setError(err: Throwable) {
         viewModelScope.launch {
-            setErrorResult(err.message ?: "Something went wrong. Please try again")
+            setErrorResult(err.message ?: unspecified_error)
         }
     }
 
@@ -120,7 +120,7 @@ class MainScreenViewModel : ViewModel() {
         _state.update {
             it.copy(
                 resultTextState = TextStateImpl(
-                    label = " ",
+                    label = "",
                     isError = false
                 )
             )

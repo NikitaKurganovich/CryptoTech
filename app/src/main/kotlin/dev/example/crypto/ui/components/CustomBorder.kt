@@ -3,6 +3,7 @@ package dev.example.crypto.ui.components
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -15,12 +16,14 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import dev.example.crypto.ui.config.CipherTheme
 
+@Composable
 fun Modifier.customBorder(
     edgeColor: Color,
     innerColor: Color,
     width: Dp,
     edges: EdgeValues,
     isFocused: Boolean = false,
+    background: Color = CipherTheme.colors.transparentBackground
 ): Modifier =
     composed {
         val density = LocalDensity.current
@@ -60,7 +63,7 @@ fun Modifier.customBorder(
                     dashWidth = width
                 )
             )
-            .background(CipherTheme.colors.transparentBackground)
+            .background(background)
             .onPlaced { size ->
                 halfOfWidth = with(density) {
                     (size.size.width / 2).toDp()
