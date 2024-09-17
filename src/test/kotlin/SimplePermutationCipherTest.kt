@@ -1,8 +1,6 @@
 import dev.bababnanick.crypto_decoding.generated.resources.Res
-import dev.bababnanick.crypto_decoding.generated.resources.key_length_warning
-import dev.bababnanick.crypto_decoding.generated.resources.numbers_warning
-import domain.releazation.SimplePermutationCipher
-import domain.releazation.VigenereCipher
+import dev.bababnanick.crypto_decoding.generated.resources.key_warning
+import domain.releazation.cipher.SimplePermutationCipher
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.compose.resources.getString
 import kotlin.test.Test
@@ -23,12 +21,12 @@ class SimplePermutationCipherTest {
     @Test
     fun `not correct length of key 1`() = runBlocking {
         TestThat(SimplePermutationCipher("encryption", listOf(3, 8, 1, 5, 2, 7, 6, 4, 10)).encrypt())
-            .assertWithErrorMessage<String>(getString(Res.string.key_length_warning))
+            .assertWithErrorMessage<String>(getString(Res.string.key_warning))
     }
 
     @Test
     fun `not correct length of key 2`() = runBlocking {
         TestThat(SimplePermutationCipher("encryption", listOf(3, 8, 1, 5, 2, 7, 6, 5, 4, 5, 3, 24)).encrypt())
-            .assertWithErrorMessage<String>(getString(Res.string.key_length_warning))
+            .assertWithErrorMessage<String>(getString(Res.string.key_warning))
     }
 }

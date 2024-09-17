@@ -1,4 +1,4 @@
-import domain.releazation.AlphabetCipherKey
+import domain.releazation.key.AlphabetCipherKey
 import org.junit.Test
 
 class AlphabetCipherKeyTest {

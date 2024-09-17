@@ -1,6 +1,6 @@
 import dev.bababnanick.crypto_decoding.generated.resources.Res
 import dev.bababnanick.crypto_decoding.generated.resources.numbers_warning
-import domain.releazation.SimplePermutationCipherKey
+import domain.releazation.key.SimplePermutationCipherKey
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.compose.resources.getString
 import org.junit.Test

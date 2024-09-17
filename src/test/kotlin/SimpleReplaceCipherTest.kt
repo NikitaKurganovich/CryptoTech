@@ -1,7 +1,4 @@
-import dev.bababnanick.crypto_decoding.generated.resources.Res
-import domain.releazation.SimpleReplaceCipher
-import kotlinx.coroutines.runBlocking
-import org.jetbrains.compose.resources.getString
+import domain.releazation.cipher.SimpleReplaceCipher
 import kotlin.test.Test
 
 class SimpleReplaceCipherTest {

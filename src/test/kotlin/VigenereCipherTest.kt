@@ -1,4 +1,4 @@
-import domain.releazation.VigenereCipher
+import domain.releazation.cipher.VigenereCipher
 import kotlin.test.Test
 
 class VigenereCipherTest {

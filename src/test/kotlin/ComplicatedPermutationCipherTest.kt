@@ -1,8 +1,6 @@
 import dev.bababnanick.crypto_decoding.generated.resources.Res
-import dev.bababnanick.crypto_decoding.generated.resources.key_length_warning
-import domain.releazation.CesarCipher
-import domain.releazation.ComplicatedPermutationCipher
-import domain.releazation.SimplePermutationCipher
+import dev.bababnanick.crypto_decoding.generated.resources.key_warning
+import domain.releazation.cipher.ComplicatedPermutationCipher
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.compose.resources.getString
 import kotlin.test.Test
@@ -33,7 +31,7 @@ class ComplicatedPermutationCipherTest {
                 )
             ).encrypt()
         )
-            .assertWithErrorMessage<String>(getString(Res.string.key_length_warning))
+            .assertWithErrorMessage<String>(getString(Res.string.key_warning))
     }
 
     @Test
@@ -47,6 +45,6 @@ class ComplicatedPermutationCipherTest {
                 )
             ).encrypt()
         )
-            .assertWithErrorMessage<String>(getString(Res.string.key_length_warning))
+            .assertWithErrorMessage<String>(getString(Res.string.key_warning))
     }
 }

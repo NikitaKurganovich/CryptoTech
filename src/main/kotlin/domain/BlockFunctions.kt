@@ -1,30 +1,31 @@
 package domain
 
-import com.jogamp.common.util.UnsafeUtil
 import dev.bababnanick.crypto_decoding.generated.resources.Res
 import dev.bababnanick.crypto_decoding.generated.resources.empty_warning
 import dev.bababnanick.crypto_decoding.generated.resources.format_error
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.compose.resources.getString
 
-fun <T> runWithChecks(
-    vararg additionalCheck: Pair<Boolean, Unit>?,
-    message: String,
+fun <T> checkMessage(
+    vararg additionalChecks: Check<T> = arrayOf(),
+    string: String,
     block: () -> T
-): T = when {
-    message.contains(Regexes.specialCharacters) -> runBlocking {
+): T {
+
+    if (string.contains(Regexes.specialCharacters)) runBlocking {
         error(getString(Res.string.format_error))
     }
 
-    message.isEmpty() -> runBlocking {
+    if (string.isEmpty()) runBlocking {
         error(getString(Res.string.empty_warning))
     }
-
-//    additionalCheck.forEach { pair ->
-//        pair?.let {
-//            it.first ->
-//        }
-//    }
-
-    else -> block()
+    additionalChecks.forEach {
+        if (it.predicate) return it.onFailed()
+    }
+    return block()
 }
+
+data class Check<T>(
+    val predicate: Boolean,
+    val onFailed: () -> T
+)

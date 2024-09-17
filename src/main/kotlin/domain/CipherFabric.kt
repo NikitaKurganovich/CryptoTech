@@ -1,7 +1,8 @@
 package domain
 
 import domain.base.Encryptable
-import domain.releazation.*
+import domain.releazation.cipher.*
+import domain.releazation.key.*
 import ui.Ciphers
 
 class CipherFabric(
@@ -27,13 +28,10 @@ class CipherFabric(
                 message = message,
                 key = SimplePermutationCipherKey(key).formatKey().getOrThrow()
             )
-            //SimplePermutationCipher(message, key)
             Ciphers.COMPLICATED_PERMUTATION -> ComplicatedPermutationCipher(
                 message = message,
                 key = ComplicatedPermutationCipherKey(key).formatKey().getOrThrow()
             )
-
-            //ComplicatedPermutationCipher(message, key)
         }
     }
 }

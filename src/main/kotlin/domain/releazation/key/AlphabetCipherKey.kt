@@ -1,7 +1,6 @@
-package domain.releazation
+package domain.releazation.key
 
 import domain.base.CipherKey
-import java.util.*
 import kotlin.random.Random
 
 class AlphabetCipherKey(override val value: String) : CipherKey<String, String> {

@@ -1,8 +1,5 @@
-import dev.bababnanick.crypto_decoding.generated.resources.Res
-import dev.bababnanick.crypto_decoding.generated.resources.numbers_warning
-import domain.releazation.ComplicatedPermutationCipherKey
+import domain.releazation.key.ComplicatedPermutationCipherKey
 import kotlinx.coroutines.runBlocking
-import javax.swing.UIManager.getString
 import kotlin.test.Test
 
 class ComplicatedPermutationCipherKeyTest {

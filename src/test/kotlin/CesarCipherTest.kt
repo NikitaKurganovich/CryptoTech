@@ -1,6 +1,6 @@
 import dev.bababnanick.crypto_decoding.generated.resources.Res
 import dev.bababnanick.crypto_decoding.generated.resources.format_error
-import domain.releazation.CesarCipher
+import domain.releazation.cipher.CesarCipher
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.compose.resources.getString
 import kotlin.test.Test

@@ -91,6 +91,7 @@ class MainScreenModel : ScreenModel {
         ).createCipher()
             .onSuccess { value ->
                 value.encrypt().onSuccess { setSuccessfulResult(it) }
+                    .onFailure { err -> setError(err) }
             }
             .onFailure { err -> setError(err) }
     }

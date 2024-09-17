@@ -1,4 +1,4 @@
-package domain.releazation
+package domain.releazation.key
 
 import dev.bababnanick.crypto_decoding.generated.resources.Res
 import dev.bababnanick.crypto_decoding.generated.resources.numbers_warning
