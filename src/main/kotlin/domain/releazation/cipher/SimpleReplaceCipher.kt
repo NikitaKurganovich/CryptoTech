@@ -1,5 +1,6 @@
 package domain.releazation.cipher
 
+import domain.addGeneratedKey
 import domain.base.Cipher
 import domain.checkMessage
 
@@ -19,10 +20,8 @@ class SimpleReplaceCipher(
                 if (index != -1) {
                     val encryptedChar = key[index]
                     if (isLowerCase) encryptedChar.lowercaseChar() else encryptedChar
-                } else {
-                    char
-                }
-            }.joinToString("")
+                } else char
+            }.joinToString("") + this.addGeneratedKey()
         }
     }
 
@@ -30,11 +29,14 @@ class SimpleReplaceCipher(
 
 override fun decrypt(): Result<String> = runCatching {
     checkMessage(string = message) {
-        message.map {
-            Char(
-                alphabet.indexOf(it) - key.toInt()
-            )
-        }.joinToString("")
+        message.map { char ->
+            val isLowerCase = char.isLowerCase()
+            val index = key.indexOf(char.lowercaseChar())
+            if (index != -1) {
+                val encryptedChar = alphabet[index]
+                if (isLowerCase) encryptedChar.lowercaseChar() else encryptedChar
+            } else char
+        }.joinToString("") + this.addGeneratedKey()
     }
 }
 

@@ -1,27 +1,25 @@
 package domain.releazation.cipher
 
+import domain.addGeneratedKey
 import domain.base.Cipher
 import domain.checkMessage
+import domain.generateMessageResult
 
 class VigenereCipher(
     override val message: String,
     override val key: String,
 ) : Cipher<String> {
-    override fun encrypt(): Result<String> = runCatching {
-        checkMessage(
-            string = message,
-        ){
-            message.mapIndexed { index, char ->
-                val keyChar = key[index % key.length]
-                if (char.isLetter()) {
-                    val base = if (char.isUpperCase()) 'A' else 'a'
-                    val keyBase = if (keyChar.isUpperCase()) 'A' else 'a'
-                    ((char - base + (keyChar - keyBase)) % 26 + base.code).toChar()
-                } else {
-                    char
-                }
-            }.joinToString("")
-        }
+    override fun encrypt(): Result<String> = generateMessageResult {
+        message.mapIndexed { index, char ->
+            val keyChar = key[index % key.length]
+            if (char.isLetter()) {
+                val base = if (char.isUpperCase()) 'A' else 'a'
+                val keyBase = if (keyChar.isUpperCase()) 'A' else 'a'
+                ((char - base + (keyChar - keyBase)) % 26 + base.code).toChar()
+            } else {
+                char
+            }
+        }.joinToString("") + this.addGeneratedKey()
     }
 
 

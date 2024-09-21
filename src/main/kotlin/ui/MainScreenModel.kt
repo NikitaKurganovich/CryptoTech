@@ -5,7 +5,6 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import dev.bababnanick.crypto_decoding.generated.resources.*
 import dev.bababnanick.crypto_decoding.generated.resources.Res
 import dev.bababnanick.crypto_decoding.generated.resources.empty
-import dev.bababnanick.crypto_decoding.generated.resources.result
 import domain.CipherFabric
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,6 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
+import ui.states.implementation.CryptoButtonState
 import ui.states.implementation.InputFieldStateImpl
 import ui.states.implementation.TextStateImpl
 
@@ -28,29 +28,20 @@ class MainScreenModel : ScreenModel {
                 label = "Message"
             ),
             infoTextState = TextStateImpl(
-                label = "",
+                label = "Result:",
                 isError = false
             ),
             resultTextState = TextStateImpl(
                 label = "",
                 isError = false
-            )
+            ),
+            buttonState = CryptoButtonState.Encrypt(
+                encryptLabel = "Encrypt",
+                onEncrypt = {onEncrypt()}
+            ),
         )
     )
     val state: StateFlow<MainScreenState> = _state.asStateFlow()
-
-    init {
-        screenModelScope.launch {
-            _state.update {
-                it.copy(
-                    infoTextState = TextStateImpl(
-                        label = getString(Res.string.result),
-                        isError = false
-                    )
-                )
-            }
-        }
-    }
 
     fun onKeyFieldValueChange(
         newValue: String,
@@ -83,7 +74,25 @@ class MainScreenModel : ScreenModel {
         resetResultField()
     }
 
-    fun onEncrypt() {
+    fun onCryptoMethodChange(isEncryption: Boolean){
+        _state.update {
+            it.copy(
+                buttonState = if (isEncryption){
+                    CryptoButtonState.Encrypt(
+                        encryptLabel = "Encrypt",
+                        onEncrypt = { onEncrypt() }
+                    )
+                } else {
+                    CryptoButtonState.Decrypt(
+                        decryptLabel = "Decrypt",
+                        onDecrypt = {onDecrypt()}
+                    )
+                }
+            )
+        }
+    }
+
+    private fun onEncrypt() {
         CipherFabric(
             cipher = state.value.currentMethod,
             key = state.value.keyInputFieldState.value,
@@ -91,6 +100,19 @@ class MainScreenModel : ScreenModel {
         ).createCipher()
             .onSuccess { value ->
                 value.encrypt().onSuccess { setSuccessfulResult(it) }
+                    .onFailure { err -> setError(err) }
+            }
+            .onFailure { err -> setError(err) }
+    }
+
+    private fun onDecrypt() {
+        CipherFabric(
+            cipher = state.value.currentMethod,
+            key = state.value.keyInputFieldState.value,
+            message = state.value.messageInputFieldState.value
+        ).createCipher()
+            .onSuccess { value ->
+                value.decrypt().onSuccess { setSuccessfulResult(it) }
                     .onFailure { err -> setError(err) }
             }
             .onFailure { err -> setError(err) }

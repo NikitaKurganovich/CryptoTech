@@ -1,12 +1,25 @@
 package ui
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.RadioButton
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.material3.Switch
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -14,13 +27,14 @@ import androidx.compose.ui.text.style.TextAlign
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import dev.bababnanick.crypto_decoding.generated.resources.Res
-import dev.bababnanick.crypto_decoding.generated.resources.encrypt
+import dev.bababnanick.crypto_decoding.generated.resources.mode
 import dev.bababnanick.crypto_decoding.generated.resources.welcome
 import org.jetbrains.compose.resources.stringResource
 import ui.components.CipherOutlinedTextField
 import ui.components.TextFieldLabel
 import ui.config.CipherTheme
 import ui.states.base.TextState
+import ui.states.implementation.CryptoButtonState
 import ui.states.implementation.TextStateImpl
 
 class MainScreen : Screen {
@@ -48,7 +62,9 @@ class MainScreen : Screen {
         ) {
             CipherMethodSelection(
                 modifier = Modifier.fillMaxWidth(0.4f),
-                onCipherMethodChange = remember { model::onCipherChange }
+                onCipherMethodChange = remember { model::onCipherChange },
+                onCryptoMethodChange = remember { model::onCryptoMethodChange },
+                state = state
             )
             WorkingArea(
                 modifier = Modifier.fillMaxWidth(0.6f),
@@ -62,6 +78,8 @@ class MainScreen : Screen {
     private fun CipherMethodSelection(
         modifier: Modifier = Modifier,
         onCipherMethodChange: (Ciphers) -> Unit,
+        onCryptoMethodChange: (Boolean) -> Unit,
+        state: MainScreenState
     ) {
         val options = Ciphers.entries
         Column(
@@ -94,6 +112,28 @@ class MainScreen : Screen {
                         modifier = Modifier.padding(start = CipherTheme.dimensions.smallDefault)
                     )
                 }
+            }
+
+            val checked by remember(state.buttonState) {
+                mutableStateOf(state.buttonState is CryptoButtonState.Encrypt)
+            }
+
+            Spacer(Modifier.height(CipherTheme.dimensions.smallDefault))
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = CipherTheme.dimensions.smallDefault),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(Res.string.mode),
+                    style = CipherTheme.typography.bold.merge()
+                )
+                Spacer(Modifier.width(CipherTheme.dimensions.smallDefault))
+                Switch(
+                    checked = checked,
+                    onCheckedChange = onCryptoMethodChange
+                )
             }
         }
     }
@@ -132,12 +172,12 @@ class MainScreen : Screen {
             Button(
                 modifier = Modifier
                     .padding(CipherTheme.dimensions.mediumMinus),
-                onClick = remember { model::onEncrypt }
+                onClick = remember(state.buttonState) { { state.buttonState.onClick() } }
             ) {
                 Text(
                     modifier = Modifier,
                     textAlign = TextAlign.Center,
-                    text = stringResource(Res.string.encrypt)
+                    text = remember(state.buttonState) { state.buttonState.label }
                 )
             }
             ResultView(

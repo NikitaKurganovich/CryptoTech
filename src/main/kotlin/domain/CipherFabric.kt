@@ -28,6 +28,7 @@ class CipherFabric(
                 message = message,
                 key = SimplePermutationCipherKey(key).formatKey().getOrThrow()
             )
+
             Ciphers.COMPLICATED_PERMUTATION -> ComplicatedPermutationCipher(
                 message = message,
                 key = ComplicatedPermutationCipherKey(key).formatKey().getOrThrow()

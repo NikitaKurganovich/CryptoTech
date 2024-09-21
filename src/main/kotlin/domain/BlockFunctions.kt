@@ -3,6 +3,8 @@ package domain
 import dev.bababnanick.crypto_decoding.generated.resources.Res
 import dev.bababnanick.crypto_decoding.generated.resources.empty_warning
 import dev.bababnanick.crypto_decoding.generated.resources.format_error
+import dev.bababnanick.crypto_decoding.generated.resources.generated
+import domain.base.Cipher
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.compose.resources.getString
 
@@ -23,6 +25,20 @@ fun <T> checkMessage(
         if (it.predicate) return it.onFailed()
     }
     return block()
+}
+
+fun <T> Cipher<T>.generateMessageResult(
+    vararg additionalChecks: Check<String> = arrayOf(),
+    block: () -> String
+): Result<String> = runCatching {
+    checkMessage<String>(
+        additionalChecks = additionalChecks,
+        string = this.message
+    ) { block() }
+}
+
+fun <T> Cipher<T>.addGeneratedKey() = runBlocking {
+    getString(Res.string.generated, key.toString())
 }
 
 data class Check<T>(

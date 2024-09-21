@@ -2,7 +2,7 @@
     <string name="format_error">Only a-z characters allowed</string>
     <string name="welcome">Enter a message and a key</string>
 
-    <string name="result">Result:</string>
+    <string name="result">Result: </string>
 
     <string name="letters_warning">Only letters in message field are allowed</string>
     <string name="numbers_warning">Only numbers in key field are allowed for this cipher method</string>
@@ -17,4 +17,7 @@
     <string name="empty"></string>
     <string name="unspecified_error">Something went wrong. Please try again</string>
 
+    <string name="generated"> (generated key: %1$s)</string>
+
+    <string name="mode">Select mode:</string>
 </resources>
