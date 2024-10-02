@@ -3,6 +3,8 @@ package apps
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import extensions.androidMainDependencies
+import extensions.androidTestImplementation
+import extensions.androidUnitTestDependencies
 import extensions.applicationVersionCode
 import extensions.applicationVersionName
 import extensions.configureAndroid
@@ -11,10 +13,11 @@ import extensions.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.dependencies
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import setups.BaseComposePlugin
 
-class AndroidApplication: Plugin<Project> {
+class AndroidApplication : Plugin<Project> {
 
     override fun apply(project: Project) {
         with(project) {
@@ -24,7 +27,23 @@ class AndroidApplication: Plugin<Project> {
             }
 
             androidMainDependencies {
+                implementation(project(":shared:ui"))
                 implementation(libs.androidx.activity.compose)
+                implementation(libs.androidx.ui.text.google.fonts)
+                implementation(libs.androidx.core.ktx)
+                implementation(libs.ui)
+                implementation(libs.material3)
+                implementation(libs.ui.tooling.preview)
+                implementation(libs.androidx.lifecycle.runtime.ktx)
+                implementation(libs.androidx.activity.compose)
+                implementation(libs.androidx.lifecycle.viewmodel.compose)
+            }
+            androidUnitTestDependencies {
+                implementation(libs.junit)
+            }
+            dependencies {
+                androidTestImplementation(libs.runner)
+                androidTestImplementation(libs.espresso.core)
             }
             with(extensions.getByType(KotlinMultiplatformExtension::class.java)) {
                 androidTarget()
@@ -65,21 +84,6 @@ class AndroidApplication: Plugin<Project> {
                     versionName = project.applicationVersionName
                 }
 
-                signingConfigs {
-
-                }
-
-                buildTypes {
-                    getByName("release") {
-                        signingConfig = signingConfigs.getByName("release")
-                        isMinifyEnabled = true
-                        isShrinkResources = true
-                        proguardFiles(
-                            getDefaultProguardFile("proguard-android-optimize.txt"),
-                            "proguard-rules.pro",
-                        )
-                    }
-                }
             }
         }
     }

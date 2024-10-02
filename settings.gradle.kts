@@ -2,6 +2,9 @@
 
 import org.gradle.api.initialization.resolve.RepositoriesMode.FAIL_ON_PROJECT_REPOS
 
+include(":android:labsecond")
+
+
 pluginManagement {
     repositories {
         google {
@@ -37,3 +40,8 @@ rootProject.name = "crypto-decoding"
 includeBuild("build-logic")
 
 include(":desktop:labFirst")
+
+include(":android:labFirst")
+
+include(":shared:logic:labSecond")
+include(":shared:ui")

@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Crypto Decoding</string>
+
+    <string name="format_error">Only a-z characters allowed</string>
+    <string name="welcome">Enter a message and a key</string>
+
+    <string name="result">Result:</string>
+
+    <string name="letters_warning">Error: Only letters in message field are allowed</string>
+
+    <string name="encrypt">Encrypt</string>
+
+    <string name="empty"> </string>
+    <string name="unspecified_error">Something went wrong. Please try again</string>
+
+
+    <string name="ok">OK</string>
+    <string name="key_header">What is the key?</string>
+
+    <!-- Cesar -->
+    <string name="about_cesar_key">Enter a single integer value to shift the alphabet. For example, a shift of 1 would change "a" to "b" and "b" to "c".</string>
+
+    <!-- Simple Replacement -->
+    <string name="about_simple_replacement_key">Enter a any string to generate an alphabet based on it.</string>
+
+    <!-- Vigenere -->
+    <string name="about_vigenere_key">Enter a keyword to generate a polyalphabetic substitution cipher. The keyword will be repeated to match the length of the message. For example, a keyword of "crypto" will generate a cipher with a repeating pattern of "c-r-y-p-t-o".</string>
+
+    <!-- Simple Permutation -->
+    <string name="about_simple_permutation_key">Enter a sequence of numbers representing the permutation of the alphabet. For example, "2 1 4 3" would swap the 1st and 2nd letters, and the 3rd and 4th letters. The sequence should contain numbers from 1 to 26, without duplicates.</string>
+
+    <!-- Complicated Permutation -->
+    <string name="about_complicated_permutation_key">Enter a sequence of numbers representing the permutation of the alphabet, with multiple swaps. For example, "2 1 4 3 6 5" would swap the 1st and 2nd letters, the 3rd and 4th letters, and the 5th and 6th letters. The sequence should contain numbers from 1 to 26, without duplicates.</string>
+</resources>

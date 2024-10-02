@@ -34,3 +34,15 @@ fun Project.androidMainDependencies(block: KotlinDependencyHandler.() -> Unit) {
         sourceSets.androidMain.dependencies(block)
     }
 }
+
+fun Project.androidInstrumentedTestDependencies(block: KotlinDependencyHandler.() -> Unit) {
+    with(extensions.getByName<KotlinMultiplatformExtension>("kotlin")) {
+        sourceSets.androidInstrumentedTest.dependencies(block)
+    }
+}
+
+fun Project.androidUnitTestDependencies(block: KotlinDependencyHandler.() -> Unit) {
+    with(extensions.getByName<KotlinMultiplatformExtension>("kotlin")) {
+        sourceSets.androidUnitTest.dependencies(block)
+    }
+}

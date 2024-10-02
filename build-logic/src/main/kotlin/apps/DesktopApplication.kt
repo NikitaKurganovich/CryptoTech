@@ -22,10 +22,10 @@ class DesktopApplication: Plugin<Project> {
                 }
                 sourceSets {
                     jvmMainDependencies {
+                        implementation(project(":shared:ui"))
                         implementation(compose.desktop.currentOs)
                         implementation(libs.voyager.navigator)
                         implementation(libs.voyager.screenModel)
-                        //implementation(libs.androidx.ui.desktop)
                         implementation(libs.kotlinx.coroutines.swing)
                     }
                     jvmTestDependencies {

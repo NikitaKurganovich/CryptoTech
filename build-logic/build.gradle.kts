@@ -16,8 +16,8 @@ dependencies {
 
 gradlePlugin {
     plugins {
-        register("application.feature"){
-            id = "application.feature"
+        register("plugin.feature"){
+            id = "plugin.feature"
             implementationClass = "plugins.FeaturePlugin"
         }
 

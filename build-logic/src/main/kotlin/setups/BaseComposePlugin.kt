@@ -27,6 +27,7 @@ internal class BaseComposePlugin : Plugin<Project> {
                     implementation(compose.components.resources)
                     implementation(compose.uiUtil)
                     implementation(compose.ui)
+                    implementation(compose.uiTooling)
 
                     implementation(libs.androidx.collections)
                     implementation(libs.kotlinx.immutablecollections)
