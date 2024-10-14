@@ -1,7 +1,7 @@
 package dev.example.crypto.domain.releazation
 
 import dev.example.crypto.domain.AdditionCheck
-import dev.example.crypto.domain.Strings.key_length_warning
+import dev.example.crypto.domain.InputErrors
 import dev.example.crypto.domain.base.Cipher
 import dev.example.crypto.domain.checkMessage
 
@@ -13,7 +13,7 @@ class SimplePermutationCipher(
         checkMessage(
             AdditionCheck(
                 message.length % key.size != 0
-            ) { error(key_length_warning) },
+            ) { error(InputErrors.KeyLength) },
             message = message,
             block = {
                 val chunkSize = key.size

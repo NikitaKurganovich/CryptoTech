@@ -1,41 +1,21 @@
 package dev.example.crypto.ui
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import dev.example.crypto.domain.CipherFabric
-import dev.example.crypto.domain.Strings.results
-import dev.example.crypto.domain.Strings.unspecified_error
-import dev.example.crypto.domain.findRes
+import dev.example.crypto.domain.InputErrors
+import dev.example.crypto.domain.ResultMessage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import androidkit.states.implementation.FieldStateImpl
-import androidkit.states.implementation.KeyFieldStateImpl
-import androidkit.states.implementation.TextStateImpl
-import dev.example.crypto.R
 
 class MainScreenViewModel : ViewModel() {
     private val _state: MutableStateFlow<MainScreenState> = MutableStateFlow(
         MainScreenState(
-            keyInputFieldState = KeyFieldStateImpl(
-                value = "",
-                label = "Key",
-                aboutKeyRes = R.string.about_cesar_key
-            ),
-            messageInputFieldState = FieldStateImpl(
-                value = "",
-                label = "Message"
-            ),
-            infoTextState = TextStateImpl(
-                label = results,
-                isError = false
-            ),
-            resultTextState = TextStateImpl(
-                label = "",
-                isError = false
-            )
+            keyInputFieldText = "",
+            messageInputFieldText = "",
+            infoText = "",
+            resultText = ResultMessage.StringMessage(""),
         )
     )
     val state: StateFlow<MainScreenState> = _state.asStateFlow()
@@ -44,11 +24,7 @@ class MainScreenViewModel : ViewModel() {
         newValue: String,
     ) {
         resetResultField()
-        _state.update {
-            it.copy(
-                keyInputFieldState = it.keyInputFieldState.onValueChange(newValue)
-            )
-        }
+        _state.update { it.copy(keyInputFieldText = newValue) }
     }
 
     fun onMessageFieldValueChange(
@@ -56,22 +32,13 @@ class MainScreenViewModel : ViewModel() {
     ) {
         resetResultField()
         _state.update {
-            it.copy(
-                messageInputFieldState = it.messageInputFieldState.onValueChange(newValue)
-            )
+            it.copy(messageInputFieldText = newValue)
         }
     }
 
     fun onCipherChange(cipher: Ciphers) {
         _state.update {
-            it.copy(
-                currentMethod = cipher,
-                keyInputFieldState = KeyFieldStateImpl(
-                    value = it.keyInputFieldState.value,
-                    label = it.keyInputFieldState.label,
-                    aboutKeyRes = findRes(cipher)
-                )
-            )
+            it.copy(currentMethod = cipher)
         }
         resetResultField()
     }
@@ -79,40 +46,44 @@ class MainScreenViewModel : ViewModel() {
     fun onEncrypt() {
         CipherFabric(
             cipher = state.value.currentMethod,
-            key = state.value.keyInputFieldState.value,
-            message = state.value.messageInputFieldState.value
+            key = state.value.keyInputFieldText,
+            message = state.value.messageInputFieldText
         ).createCipher()
             .onSuccess { value ->
-                value.encrypt().onSuccess { setSuccessfulResult(it) }
+                value.encrypt().onSuccess {
+                    setSuccessfulResult(
+                        ResultMessage.StringMessage(it)
+                    )
+                }
                     .onFailure { err -> setError(err) }
             }
             .onFailure { err -> setError(err) }
     }
 
     private fun setError(err: Throwable) {
-        viewModelScope.launch {
-            setErrorResult(err.message ?: unspecified_error)
-        }
+        setErrorResult(
+            ResultMessage.IdMessage(
+                err.message?.let {
+                    InputErrors.valueOf(it).id
+                } ?: InputErrors.Unspecified.id
+            )
+        )
     }
 
-    private fun setSuccessfulResult(value: String) {
+    private fun setSuccessfulResult(value: ResultMessage) {
         _state.update {
             it.copy(
-                resultTextState = TextStateImpl(
-                    label = value,
-                    isError = false
-                )
+                resultText = value,
+                isErrorResult = false
             )
         }
     }
 
-    private fun setErrorResult(exception: String) {
+    private fun setErrorResult(exception: ResultMessage) {
         _state.update {
             it.copy(
-                resultTextState = TextStateImpl(
-                    label = exception,
-                    isError = true
-                )
+                resultText = exception,
+                isErrorResult = true
             )
         }
     }
@@ -120,10 +91,8 @@ class MainScreenViewModel : ViewModel() {
     private fun resetResultField() {
         _state.update {
             it.copy(
-                resultTextState = TextStateImpl(
-                    label = "",
-                    isError = false
-                )
+                resultText = ResultMessage.StringMessage(""),
+                isErrorResult = false
             )
         }
     }

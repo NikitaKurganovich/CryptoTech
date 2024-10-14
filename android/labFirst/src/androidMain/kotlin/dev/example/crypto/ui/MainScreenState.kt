@@ -1,21 +1,46 @@
 package dev.example.crypto.ui
 
-import androidkit.states.base.FieldState
-import androidkit.states.base.KeyFieldState
-import androidkit.states.base.TextState
+import dev.example.crypto.R
+import dev.example.crypto.domain.ResultMessage
+
 
 data class MainScreenState(
-    val keyInputFieldState: KeyFieldState,
-    val messageInputFieldState: FieldState,
-    val infoTextState: TextState,
-    val resultTextState: TextState,
+    val keyInputFieldText: String,
+    val messageInputFieldText: String,
+    val infoText: String,
+    val resultText: ResultMessage,
+    val isErrorResult: Boolean = false,
     val currentMethod: Ciphers = Ciphers.CESAR
 )
 
-enum class Ciphers(val cipher: String) {
-    CESAR("Cesar"),
-    SIMPLE_REPLACEMENT("Simple Replacement"),
-    VIGENERE("Vigenere"),
-    SIMPLE_PERMUTATION("Simple Permutation"),
-    COMPLICATED_PERMUTATION("Complicated Permutation")
+enum class Ciphers(
+    val cipher: String,
+    val keyDescription: KeyDescription
+) {
+    CESAR(
+        cipher = "Cesar",
+        keyDescription = KeyDescription(R.string.first_about_cesar_key)
+    ),
+    SIMPLE_REPLACEMENT(
+        cipher = "Simple Replacement",
+        keyDescription = KeyDescription(R.string.first_about_simple_replacement_key)
+    ),
+    VIGENERE(
+        cipher = "Vigenere",
+        keyDescription = KeyDescription(R.string.first_about_vigenere_key)
+    ),
+    SIMPLE_PERMUTATION(
+        cipher = "Simple Permutation",
+        keyDescription = KeyDescription(R.string.first_about_simple_permutation_key)
+    ),
+    COMPLICATED_PERMUTATION(
+        cipher = "Complicated Permutation",
+        keyDescription = KeyDescription(R.string.first_about_complicated_permutation_key)
+    )
+}
+
+data class KeyDescription(
+    val key: Int
+){
+    operator fun invoke(): Int = key
 }

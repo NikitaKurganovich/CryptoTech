@@ -10,9 +10,9 @@ class VigenereCipher(
     override fun encrypt(): Result<String> = runCatching {
         checkMessage(
             message = message,
-            block = {
-                message.mapIndexed { index, char ->
-                    val keyChar = key[index % key.length]
+        ) {
+            message.mapIndexed { index, char ->
+                val keyChar = key[index % key.length]
                     if (char.isLetter()) {
                         val base = if (char.isUpperCase()) 'A' else 'a'
                         val keyBase = if (keyChar.isUpperCase()) 'A' else 'a'
@@ -22,6 +22,5 @@ class VigenereCipher(
                     }
                 }.joinToString("")
             }
-        )
     }
 }

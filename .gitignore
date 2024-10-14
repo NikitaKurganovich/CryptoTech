@@ -40,3 +40,13 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+/.idea/caches/deviceStreaming.xml
+/.idea/gradle.xml
+/.idea/kotlinc.xml
+/.idea/artifacts/labFirst_jvm.xml
+/.idea/artifacts/labFirst_jvm_1_0.xml
+/.idea/artifacts/labFirst_jvm_1_0_0.xml
+/local.properties
+/.idea/misc.xml
+/.idea/vcs.xml
+/.idea/workspace.xml

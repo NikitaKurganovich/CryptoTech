@@ -57,9 +57,6 @@ import androidkit.kit.CipherTextWithBord
 import androidkit.kit.EdgeValues
 import androidkit.kit.customBorder
 import androidkit.theme.CipherTheme
-import androidkit.states.base.TextState
-import androidkit.states.implementation.FieldStateImpl
-import androidkit.states.implementation.TextStateImpl
 
 @Composable
 fun MainScreen(
@@ -106,6 +103,7 @@ private fun ScreenContent(
     model: MainScreenViewModel = viewModel(),
     state: MainScreenState,
 ) {
+    val resultMessage = state.resultText.getString()
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -142,7 +140,7 @@ private fun ScreenContent(
             Text(
                 modifier = Modifier,
                 textAlign = TextAlign.Center,
-                text = stringResource(R.string.encrypt),
+                text = stringResource(R.string.first_encrypt),
                 color = CipherTheme.colors.text,
                 style = CipherTheme.typography.default
             )
@@ -150,8 +148,9 @@ private fun ScreenContent(
         ResultView(
             modifier = Modifier
                 .padding(bottom = CipherTheme.viewDimensions.resultBottomIndent),
-            infoTextState = state.infoTextState,
-            resultTextState = state.resultTextState
+            infoText = remember(state.infoText) { state.infoText },
+            resultText = remember(state.resultText) { resultMessage },
+            isError = remember(state.isErrorResult) { state.isErrorResult }
         )
     }
 }
@@ -167,17 +166,14 @@ private fun CipherMethodSelection(
     }
     val (selectedOption, onOptionSelected) = remember { mutableStateOf(options.first()) }
 
-    val textState = FieldStateImpl(
-        label = selectedOption.cipher,
-        value = selectedOption.cipher,
-    )
+    val textState = selectedOption.cipher
     val angle by animateFloatAsState(targetValue = if (expanded) 180f else 0f, label = "")
     val icon = rememberVectorPainter(image = Icons.Default.KeyboardArrowDown)
     CipherTextWithBord(
         modifier = modifier
             .fillMaxWidth()
             .clickable { expanded = true },
-        textState = textState,
+        text = textState,
         trailingIcon = {
             Icon(
                 modifier = Modifier
@@ -244,13 +240,11 @@ private fun WorkingArea(
     model: MainScreenViewModel,
     state: MainScreenState,
 ) {
-    val keyString = state.keyInputFieldState.aboutKey
-    val aboutKey by remember(state.keyInputFieldState) { mutableStateOf(keyString) }
     var expanded by remember { mutableStateOf(false) }
     if (expanded) Dialog(onDismissRequest = { expanded = false }) {
         InfoPopup(
             headerText = stringResource(id = R.string.key_header),
-            contentText = aboutKey,
+            contentText = stringResource(state.currentMethod.keyDescription()),
             buttonText = stringResource(id = R.string.ok),
             onDismiss = { expanded = false }
         )
@@ -263,13 +257,11 @@ private fun WorkingArea(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = CipherTheme.dimensions.mediumMinus),
-            inputFieldState = state.messageInputFieldState,
-            onValueChange = { newValue ->
-                model.onMessageFieldValueChange(newValue)
-            },
+            value = state.messageInputFieldText,
+            onValueChange = model::onMessageFieldValueChange,
             placeHolder = {
                 Text(
-                    text = state.messageInputFieldState.label,
+                    text = stringResource(R.string.first_message_placeholder),
                     style = CipherTheme.typography.default
                 )
             }
@@ -278,13 +270,11 @@ private fun WorkingArea(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = CipherTheme.dimensions.mediumMinus),
-            inputFieldState = state.keyInputFieldState,
-            onValueChange = { newValue ->
-                model.onKeyFieldValueChange(newValue)
-            },
+            value = state.keyInputFieldText,
+            onValueChange = model::onKeyFieldValueChange,
             placeHolder = {
                 Text(
-                    text = state.keyInputFieldState.label,
+                    text = stringResource(R.string.first_key_placeholder),
                     style = CipherTheme.typography.default
                 )
             },
@@ -308,8 +298,9 @@ private fun WorkingArea(
 @Composable
 private fun ResultView(
     modifier: Modifier = Modifier,
-    infoTextState: TextState,
-    resultTextState: TextState,
+    infoText: String,
+    resultText: String,
+    isError: Boolean
 ) {
     Column(
         modifier = modifier,
@@ -319,7 +310,7 @@ private fun ResultView(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = CipherTheme.dimensions.smallPlus),
-            textState = infoTextState
+            text = infoText
         )
         CipherTextWithBord(
             modifier = Modifier
@@ -329,7 +320,8 @@ private fun ResultView(
                     height = CipherTheme.viewDimensions.resultFieldHeight
                 )
                 .padding(top = CipherTheme.dimensions.smallPlus),
-            textState = resultTextState
+            text = resultText,
+            isError = isError
         )
     }
 }
@@ -365,10 +357,7 @@ fun InfoPopup(
                     vertical = CipherTheme.dimensions.mediumDefault,
                     horizontal = CipherTheme.dimensions.largeDefault
                 ),
-            textState = TextStateImpl(
-                label = headerText,
-                isError = false
-            ),
+            text =  headerText,
             textStyle = CipherTheme.typography.default.copy(
                 textAlign = TextAlign.Left
             )
@@ -385,10 +374,7 @@ fun InfoPopup(
                 vertical = CipherTheme.dimensions.mediumDefault,
                 horizontal = CipherTheme.dimensions.largeDefault
             ),
-            textState = TextStateImpl(
-                label = contentText,
-                isError = false
-            )
+            text =  contentText,
         )
         Button(
             modifier = Modifier
@@ -409,10 +395,7 @@ fun InfoPopup(
             onClick = onDismiss
         ) {
             CipherText(
-                textState = TextStateImpl(
-                    label = buttonText,
-                    isError = false
-                ),
+                text = buttonText,
                 color = CipherTheme.colors.buttonFilled
             )
         }

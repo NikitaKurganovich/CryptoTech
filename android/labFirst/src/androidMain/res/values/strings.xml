@@ -1,34 +1,45 @@
 <resources>
-    <string name="app_name">Crypto Decoding</string>
+    <string name="first_app_name">Crypto Decoding</string>
 
-    <string name="format_error">Only a-z characters allowed</string>
-    <string name="welcome">Enter a message and a key</string>
+    <string name="first_message_format_warning">Error: Only a-z characters allowed in message field</string>
+    <string name="first_key_format_warning">Error: Only a-z characters allowed in key field for this cipher method</string>
 
-    <string name="result">Result:</string>
+    <string name="first_letters_warning">Error: Only letters in message field are allowed</string>
+    <string name="first_key_warning">Error: Only numbers in key field are allowed</string>
+    <string name="first_key_length_warning">Error: Length of key is not correct</string>
+    <string name="first_length_warning">Error: Length of key must be more than 1</string>
+    <string name="first_empty_message_warning">Error: Message field can\'t be empty</string>
+    <string name="first_numbers_warning">Error: Only numbers in key field are allowed for this cipher method</string>
+    <string name="first_empty_key_warning">Error: Key field can\'t be empty</string>
 
-    <string name="letters_warning">Error: Only letters in message field are allowed</string>
+    <string name="first_welcome">Enter a message and a key</string>
 
-    <string name="encrypt">Encrypt</string>
+    <string name="first_result">Result:</string>
+
+
+    <string name="first_encrypt">Encrypt</string>
 
     <string name="empty"> </string>
-    <string name="unspecified_error">Something went wrong. Please try again</string>
+    <string name="first_unspecified_error">Something went wrong. Please try again</string>
 
+    <string name="first_message_placeholder">Message</string>
+    <string name="first_key_placeholder">Key</string>
 
     <string name="ok">OK</string>
     <string name="key_header">What is the key?</string>
 
     <!-- Cesar -->
-    <string name="about_cesar_key">Enter a single integer value to shift the alphabet. For example, a shift of 1 would change "a" to "b" and "b" to "c".</string>
+    <string name="first_about_cesar_key">Enter a single integer value to shift the alphabet. For example, a shift of 1 would change "a" to "b" and "b" to "c".</string>
 
     <!-- Simple Replacement -->
-    <string name="about_simple_replacement_key">Enter a any string to generate an alphabet based on it.</string>
+    <string name="first_about_simple_replacement_key">Enter a any string to generate an alphabet based on it.</string>
 
     <!-- Vigenere -->
-    <string name="about_vigenere_key">Enter a keyword to generate a polyalphabetic substitution cipher. The keyword will be repeated to match the length of the message. For example, a keyword of "crypto" will generate a cipher with a repeating pattern of "c-r-y-p-t-o".</string>
+    <string name="first_about_vigenere_key">Enter a keyword to generate a polyalphabetic substitution cipher. The keyword will be repeated to match the length of the message. For example, a keyword of "crypto" will generate a cipher with a repeating pattern of "c-r-y-p-t-o".</string>
 
     <!-- Simple Permutation -->
-    <string name="about_simple_permutation_key">Enter a sequence of numbers representing the permutation of the alphabet. For example, "2 1 4 3" would swap the 1st and 2nd letters, and the 3rd and 4th letters. The sequence should contain numbers from 1 to 26, without duplicates.</string>
+    <string name="first_about_simple_permutation_key">Enter a sequence of numbers representing the permutation of the alphabet. For example, "2 1 4 3" would swap the 1st and 2nd letters, and the 3rd and 4th letters. The sequence should contain numbers from 1 to 26, without duplicates.</string>
 
     <!-- Complicated Permutation -->
-    <string name="about_complicated_permutation_key">Enter a sequence of numbers representing the permutation of the alphabet, with multiple swaps. For example, "2 1 4 3 6 5" would swap the 1st and 2nd letters, the 3rd and 4th letters, and the 5th and 6th letters. The sequence should contain numbers from 1 to 26, without duplicates.</string>
+    <string name="first_about_complicated_permutation_key">Enter a sequence of numbers representing the permutation of the alphabet, with multiple swaps. For example, "2 1 4 3 6 5" would swap the 1st and 2nd letters, the 3rd and 4th letters, and the 5th and 6th letters. The sequence should contain numbers from 1 to 26, without duplicates.</string>
 </resources>

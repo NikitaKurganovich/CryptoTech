@@ -1,5 +1,5 @@
 package dev.example.crypto.domain
 
 object Regexes {
-    val specialCharacters = Regex("[^A-Za-z]")
+    val onlyAlphabet = Regex("[^A-Za-z]")
 }

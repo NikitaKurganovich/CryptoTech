@@ -14,8 +14,6 @@ import androidx.compose.ui.graphics.*
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidkit.theme.CipherTheme
-import androidkit.states.base.FieldState
-import androidkit.states.implementation.FieldStateImpl
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -33,7 +31,8 @@ fun CipherOutlinedTextField(
         horizontal = CipherTheme.viewDimensions.inputCornerEdgeWidth,
         vertical = CipherTheme.viewDimensions.inputCornerEdgeHeight
     ),
-    inputFieldState: FieldState,
+    value: String,
+    isError: Boolean = false,
     onValueChange: (String) -> Unit = remember { {} },
     readOnly: Boolean = false,
     textStyle: TextStyle = CipherTheme.typography.default,
@@ -56,12 +55,12 @@ fun CipherOutlinedTextField(
                 edges = edges,
                 isFocused = isFocused
             ),
-        value = inputFieldState.value,
+        value = value,
         onValueChange = onValueChange,
         textStyle = textStyle,
         placeholder = placeHolder,
         singleLine = true,
-        isError = inputFieldState.isError,
+        isError = isError,
         readOnly = readOnly,
         shape = CutCornerShape(Dp.Hairline),
         colors = OutlinedTextFieldDefaults.colors(
@@ -82,17 +81,8 @@ fun FieldPreview() {
         vertical = CipherTheme.viewDimensions.inputCornerEdgeHeight,
         horizontal = CipherTheme.viewDimensions.inputCornerEdgeWidth
     )
+    var value by remember { mutableStateOf("") }
     CipherTheme {
-        var state by remember {
-            mutableStateOf(
-                FieldStateImpl(
-                    isError = false,
-                    label = "test",
-                    value = "",
-                    supportingText = "Test",
-                )
-            )
-        }
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -102,14 +92,14 @@ fun FieldPreview() {
             CipherOutlinedTextField(
                 modifier = Modifier
                     .padding(4.dp),
-                inputFieldState = state,
+                value = value,
                 onValueChange = {
-                    state = state.onValueChange(it)
+                    value = it
                 },
                 edges = edgeValues,
                 placeHolder = {
                     Text(
-                        text = state.label,
+                        text = "state.label",
                         style = CipherTheme.typography.default,
                         color = CipherTheme.colors.hint
                     )

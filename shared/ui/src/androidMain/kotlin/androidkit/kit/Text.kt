@@ -11,12 +11,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidkit.theme.CipherTheme
-import androidkit.states.base.TextState
 
 @Composable
 fun CipherTextWithBord(
     modifier: Modifier = Modifier,
-    textState: TextState,
+    text: String,
+    isError: Boolean = false,
     edges: EdgeValues = EdgeValues(
         horizontal = CipherTheme.viewDimensions.textCornerEdgeWidth,
         vertical = CipherTheme.viewDimensions.textCornerEdgeHeight
@@ -42,8 +42,8 @@ fun CipherTextWithBord(
         Text(
             modifier = Modifier
                 .padding(horizontal = CipherTheme.dimensions.mediumDefault),
-            text = textState.label,
-            color = if(textState.isError) CipherTheme.colors.textError
+            text = text,
+            color = if(isError) CipherTheme.colors.textError
             else CipherTheme.colors.text,
             style = textStyle
 
@@ -55,14 +55,15 @@ fun CipherTextWithBord(
 @Composable
 fun CipherText(
     modifier: Modifier = Modifier,
-    textState: TextState,
+    text: String,
+    isError: Boolean = false,
     textStyle: TextStyle = CipherTheme.typography.default,
     color: Color = CipherTheme.colors.text
 ) {
     Text(
         modifier = modifier,
-        text = textState.label,
-        color = if(textState.isError) CipherTheme.colors.textError
+        text = text,
+        color = if(isError) CipherTheme.colors.textError
         else color,
         style = textStyle
     )

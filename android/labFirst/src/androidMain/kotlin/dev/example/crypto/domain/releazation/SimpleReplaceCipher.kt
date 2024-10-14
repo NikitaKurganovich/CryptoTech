@@ -12,18 +12,17 @@ class SimpleReplaceCipher(
     override fun encrypt(): Result<String> = runCatching {
         checkMessage(
             message = message,
-            block = {
-                message.map { char ->
-                    val isLowerCase = char.isLowerCase()
-                    val index = alphabet.indexOf(char.uppercaseChar())
-                    if (index != -1) {
-                        val encryptedChar = key[index]
-                        if (isLowerCase) encryptedChar.lowercaseChar() else encryptedChar
-                    } else {
-                        char
-                    }
-                }.joinToString("")
-            }
-        )
+        ) {
+            message.map { char ->
+                val isLowerCase = char.isLowerCase()
+                val index = alphabet.indexOf(char.uppercaseChar())
+                if (index != -1) {
+                    val encryptedChar = key[index]
+                    if (isLowerCase) encryptedChar.lowercaseChar() else encryptedChar
+                } else {
+                    char
+                }
+            }.joinToString("") + " ( $key )"
+        }
     }
 }
