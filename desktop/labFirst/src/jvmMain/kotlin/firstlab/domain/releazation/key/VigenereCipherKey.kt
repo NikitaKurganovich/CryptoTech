@@ -1,9 +1,9 @@
 package firstlab.domain.releazation.key
 
+import dev.crypto.base.interfaces.CipherKey
 import firstlab.labfirst.generated.resources.Res
 import firstlab.labfirst.generated.resources.format_error
 import firstlab.domain.Regexes
-import firstlab.domain.base.CipherKey
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.compose.resources.getString
 

@@ -1,10 +1,10 @@
 package firstlab.domain
 
+import dev.crypto.base.interfaces.Cipher
 import firstlab.labfirst.generated.resources.Res
 import firstlab.labfirst.generated.resources.empty_warning
 import firstlab.labfirst.generated.resources.format_error
 import firstlab.labfirst.generated.resources.generated
-import firstlab.domain.base.Cipher
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.compose.resources.getString
 

@@ -33,7 +33,7 @@ fun CipherOutlinedTextField(
     ),
     value: String,
     isError: Boolean = false,
-    onValueChange: (String) -> Unit = remember { {} },
+    onValueChange: (String) -> Unit,
     readOnly: Boolean = false,
     textStyle: TextStyle = CipherTheme.typography.default,
     trailIcon: @Composable (() -> Unit)? = null,

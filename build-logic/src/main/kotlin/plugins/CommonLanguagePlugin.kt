@@ -1,10 +1,12 @@
-package setups
+package plugins
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import setups.AndroidSetup
+import setups.BaseLanguagePlugin
 
-internal class CommonLanguagePlugin: Plugin<Project> {
+class CommonLanguagePlugin: Plugin<Project> {
     override fun apply(project: Project) {
         with(project) {
             with(pluginManager) {

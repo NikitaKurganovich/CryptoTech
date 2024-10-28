@@ -2,6 +2,7 @@ package setups
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import plugins.CommonLanguagePlugin
 
 internal class CommonComposePlugin: Plugin<Project> {
     override fun apply(project: Project) {

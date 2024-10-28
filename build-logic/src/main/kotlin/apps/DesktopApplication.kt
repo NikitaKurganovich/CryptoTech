@@ -22,6 +22,7 @@ class DesktopApplication: Plugin<Project> {
                 }
                 sourceSets {
                     jvmMainDependencies {
+                        implementation(project(":base"))
                         implementation(project(":shared:ui"))
                         implementation(compose.desktop.currentOs)
                         implementation(libs.voyager.navigator)

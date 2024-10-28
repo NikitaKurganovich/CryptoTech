@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="basetest-desktop">
+    <output-path>$PROJECT_DIR$/basetest/build/libs</output-path>
+    <root id="archive" name="basetest-desktop.jar">
+      <element id="module-output" name="crypto-decoding.basetest.desktopMain" />
+    </root>
+  </artifact>
+</component>

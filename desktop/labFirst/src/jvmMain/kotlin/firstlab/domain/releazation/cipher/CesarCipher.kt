@@ -1,6 +1,6 @@
 package firstlab.domain.releazation.cipher
 
-import firstlab.domain.base.Cipher
+import dev.crypto.base.interfaces.Cipher
 import firstlab.domain.checkMessage
 
 class CesarCipher(

@@ -38,8 +38,10 @@ fun CipherSwitch(
     modifier: Modifier = Modifier,
     firstOptionText: String,
     secondOptionText: String,
+    isFirstSelected: Boolean = true,
+    onClick: (Boolean) -> Unit
 ) {
-    var isFirstSelected by remember { mutableStateOf(true) }
+    var isFirstSelected by remember { mutableStateOf(isFirstSelected) }
     val rotateDegree by rememberAnimatedRotateDegree(
         defaultValue = 180f,
         activeValue = 0f,
@@ -69,7 +71,10 @@ fun CipherSwitch(
     Row(
         modifier = modifier
             .height(CipherTheme.dimensions.largePlus)
-            .clickable { isFirstSelected = !isFirstSelected },
+            .clickable {
+                isFirstSelected = !isFirstSelected
+                onClick(isFirstSelected)
+            },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
@@ -184,6 +189,7 @@ fun SwitchPreview() {
             modifier = Modifier.fillMaxWidth(),
             firstOptionText = "Test1",
             secondOptionText = "Test2",
+            onClick = {}
         )
     }
 }

@@ -1,4 +1,5 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import extensions.jvmMainDependencies
 
 plugins{
     id("desktop.application")
@@ -6,6 +7,10 @@ plugins{
 
 group = "firstlab"
 version = "1.0.0"
+
+jvmMainDependencies{
+    implementation(project(":base"))
+}
 
 compose.desktop{
     application{

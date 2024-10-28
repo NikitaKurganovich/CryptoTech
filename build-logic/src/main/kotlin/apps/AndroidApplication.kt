@@ -27,6 +27,7 @@ class AndroidApplication : Plugin<Project> {
             }
 
             androidMainDependencies {
+                implementation(project(":base"))
                 implementation(project(":shared:ui"))
                 implementation(libs.androidx.activity.compose)
                 implementation(libs.androidx.ui.text.google.fonts)

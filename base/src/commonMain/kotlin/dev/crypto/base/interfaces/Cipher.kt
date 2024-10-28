@@ -1,4 +1,4 @@
-package firstlab.domain.base
+package dev.crypto.base.interfaces
 
 interface Cipher<T>: Encryptable {
     val message: String

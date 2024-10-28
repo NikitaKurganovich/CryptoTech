@@ -15,7 +15,6 @@
             </builds>
           </compositeBuild>
         </compositeConfiguration>
-        <option name="testRunner" value="CHOOSE_PER_TEST" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleJvm" value="#GRADLE_LOCAL_JAVA_HOME" />
         <option name="modules">
@@ -24,6 +23,8 @@
             <option value="$PROJECT_DIR$/android" />
             <option value="$PROJECT_DIR$/android/labFirst" />
             <option value="$PROJECT_DIR$/android/labsecond" />
+            <option value="$PROJECT_DIR$/base" />
+            <option value="$PROJECT_DIR$/basetest" />
             <option value="$PROJECT_DIR$/build-logic" />
             <option value="$PROJECT_DIR$/desktop" />
             <option value="$PROJECT_DIR$/desktop/labFirst" />

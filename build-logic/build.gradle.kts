@@ -21,6 +21,11 @@ gradlePlugin {
             implementationClass = "plugins.FeaturePlugin"
         }
 
+        register("plugin.language"){
+            id = "plugin.language"
+            implementationClass = "plugins.CommonLanguagePlugin"
+        }
+
         register("desktop.application"){
             id = "desktop.application"
             implementationClass = "apps.DesktopApplication"

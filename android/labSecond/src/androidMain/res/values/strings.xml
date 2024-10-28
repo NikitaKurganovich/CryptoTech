@@ -1,3 +1,15 @@
 <resources>
-    <string name="app_name">labSecond</string>
+    <string name="second_app_name">RSA crypto</string>
+
+    <string name="second_cipher_switch_encrypt">Encrypt</string>
+    <string name="second_cipher_switch_decrypt">Decrypt</string>
+
+    <string name="second_q_key_placeholder">Enter a Q key</string>
+    <string name="second_p_key_placeholder">Enter a P key</string>
+    <string name="second_e_key_placeholder">Enter a E key</string>
+    <string name="second_message_placeholder">Enter a message</string>
+
+    <string name="second_button_action">Go</string>
+
+    <string name="second_result">Result:</string>
 </resources>

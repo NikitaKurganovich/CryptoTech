@@ -39,6 +39,10 @@ rootProject.name = "crypto-decoding"
 
 includeBuild("build-logic")
 
+include(":base")
+include(":basetest")
+
+
 include(":desktop:labFirst")
 
 include(":android:labFirst")
