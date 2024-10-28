@@ -105,7 +105,6 @@ fun FieldPreview() {
                     )
                 }
             )
-            OutlinedTextField(value = "", onValueChange = {})
         }
     }
 }

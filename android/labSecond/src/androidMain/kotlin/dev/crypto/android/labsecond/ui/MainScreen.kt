@@ -2,10 +2,13 @@ package dev.crypto.android.labsecond.ui
 
 import androidx.compose.runtime.Composable
 import androidkit.components.CipherScreen
+import androidkit.kit.CipherButton
 import androidkit.kit.CipherOutlinedTextField
-import androidkit.states.implementation.FieldStateImpl
+import androidkit.kit.CipherResultView
+import androidkit.kit.CipherSwitch
 import androidkit.theme.CipherTheme
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -27,45 +30,65 @@ fun ScreenContent(
             .fillMaxSize()
             .padding(horizontal = CipherTheme.dimensions.mediumDefault)
     ) {
-        CipherOutlinedTextField(
+        CipherSwitch(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = CipherTheme.dimensions.mediumMinus),
-            inputFieldState = FieldStateImpl(
-                label = "Text",
-                value = "Text",
-                isError = false
-            )
+                .fillMaxWidth(),
+            firstOptionText = "Encrypt",
+            secondOptionText = "Decrypt",
         )
-        CipherOutlinedTextField(
+        InputFields()
+        CipherButton(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = CipherTheme.dimensions.mediumMinus),
-            inputFieldState = FieldStateImpl(
-                label = "Text",
-                value = "Text",
-                isError = false
-            )
+                .fillMaxWidth(),
+            text = "Submit",
+            onClick = {}
         )
-        CipherOutlinedTextField(
+        CipherResultView(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = CipherTheme.dimensions.mediumMinus),
-            inputFieldState = FieldStateImpl(
-                label = "Text",
-                value = "Text",
-                isError = false
-            )
-        )
-        CipherOutlinedTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = CipherTheme.dimensions.mediumMinus),
-            inputFieldState = FieldStateImpl(
-                label = "Text",
-                value = "Text",
-                isError = false
-            )
+                .fillMaxWidth(),
+            infoText = "Info",
+            resultText = "Result",
+            isError = false
         )
     }
+}
+
+@Composable
+private fun ColumnScope.InputFields() {
+    CipherOutlinedTextField(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = CipherTheme.dimensions.mediumMinus),
+        value = "Text",
+        onValueChange = {
+
+        }
+    )
+    CipherOutlinedTextField(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = CipherTheme.dimensions.mediumMinus),
+        value = "Text",
+        onValueChange = {
+
+        }
+    )
+    CipherOutlinedTextField(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = CipherTheme.dimensions.mediumMinus),
+        value = "Text",
+        onValueChange = {
+
+        }
+    )
+    CipherOutlinedTextField(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = CipherTheme.dimensions.mediumMinus),
+        value = "Text",
+        onValueChange = {
+
+        }
+    )
 }

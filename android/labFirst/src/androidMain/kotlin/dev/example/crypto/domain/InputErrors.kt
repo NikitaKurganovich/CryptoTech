@@ -1,6 +1,7 @@
 package dev.example.crypto.domain
 
-import dev.example.crypto.R
+import dev.crypto.labfirst.R
+
 
 enum class InputErrors(val id: ErrorId) {
     MessageFormat(ErrorId(R.string.first_message_format_warning)),

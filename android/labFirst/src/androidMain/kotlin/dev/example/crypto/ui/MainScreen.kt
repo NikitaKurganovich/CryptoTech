@@ -1,5 +1,6 @@
 package dev.example.crypto.ui
 
+import androidkit.kit.CipherButton
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
@@ -50,13 +51,14 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
-import dev.example.crypto.R
 import androidkit.kit.CipherOutlinedTextField
 import androidkit.kit.CipherText
 import androidkit.kit.CipherTextWithBord
 import androidkit.kit.EdgeValues
+import androidkit.kit.CipherResultView
 import androidkit.kit.customBorder
 import androidkit.theme.CipherTheme
+import dev.crypto.labfirst.R
 
 @Composable
 fun MainScreen(
@@ -123,29 +125,14 @@ private fun ScreenContent(
             modifier = Modifier,
             onCipherMethodChange = remember { model::onCipherChange }
         )
-        Button(
+        CipherButton(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = CipherTheme.viewDimensions.buttonVerticalPadding)
-                .size(
-                    height = CipherTheme.viewDimensions.fieldBaseHeight,
-                    width = CipherTheme.viewDimensions.fieldBaseWidth
-                ),
-            shape = CutCornerShape(Dp.Hairline),
-            onClick = remember { model::onEncrypt },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = CipherTheme.colors.buttonFilled
-            )
-        ) {
-            Text(
-                modifier = Modifier,
-                textAlign = TextAlign.Center,
-                text = stringResource(R.string.first_encrypt),
-                color = CipherTheme.colors.text,
-                style = CipherTheme.typography.default
-            )
-        }
-        ResultView(
+                .padding(vertical = CipherTheme.viewDimensions.buttonVerticalPadding),
+            text = stringResource(R.string.first_encrypt),
+            onClick = remember { model::onEncrypt }
+        )
+        CipherResultView(
             modifier = Modifier
                 .padding(bottom = CipherTheme.viewDimensions.resultBottomIndent),
             infoText = remember(state.infoText) { state.infoText },
@@ -295,36 +282,6 @@ private fun WorkingArea(
     }
 }
 
-@Composable
-private fun ResultView(
-    modifier: Modifier = Modifier,
-    infoText: String,
-    resultText: String,
-    isError: Boolean
-) {
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.Center,
-    ) {
-        CipherText(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = CipherTheme.dimensions.smallPlus),
-            text = infoText
-        )
-        CipherTextWithBord(
-            modifier = Modifier
-                .fillMaxWidth()
-                .size(
-                    width = CipherTheme.viewDimensions.resultFieldWidth,
-                    height = CipherTheme.viewDimensions.resultFieldHeight
-                )
-                .padding(top = CipherTheme.dimensions.smallPlus),
-            text = resultText,
-            isError = isError
-        )
-    }
-}
 
 @Composable
 fun InfoPopup(

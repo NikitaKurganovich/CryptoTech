@@ -12,6 +12,7 @@ import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.api.plugins.ExtensionAware
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.findByType
+import org.gradle.kotlin.dsl.support.kotlinCompilerOptions
 import org.gradle.kotlin.dsl.the
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.compose.ComposeExtension
@@ -19,8 +20,10 @@ import org.jetbrains.compose.ComposePlugin
 import org.jetbrains.compose.desktop.DesktopExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.dsl.kotlinExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.konan.util.visibleName
 
 internal val Project.libs: LibrariesForLibs
     get() = the<LibrariesForLibs>()
@@ -68,6 +71,7 @@ internal fun Project.configureKotlinOptions() {
                 this@configureKotlinOptions.javaVersion
             }
             jvmTarget.set(this@configureKotlinOptions.jvmTarget)
+
             freeCompilerArgs.add(
                 "-opt-in=" +
                         "kotlin.Experimental," +

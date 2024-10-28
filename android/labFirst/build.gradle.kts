@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "dev.example.crypto"
+    namespace = "dev.crypto.labfirst"
 
     buildTypes {
         release {
