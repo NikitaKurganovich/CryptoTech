@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="labFirst-jvm-1.0.0">
-    <output-path>$PROJECT_DIR$/desktop/labFirst/build/libs</output-path>
-    <root id="archive" name="labFirst-jvm-1.0.0.jar">
-      <element id="module-output" name="crypto-decoding.desktop.labFirst.jvmMain" />
-    </root>
-  </artifact>
-</component>
