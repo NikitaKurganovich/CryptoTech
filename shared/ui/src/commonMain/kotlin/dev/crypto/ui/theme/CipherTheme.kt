@@ -9,8 +9,8 @@ fun CipherTheme(
 ) {
     val cipherDimensions = cipherDimensions
     val cipherTypography = cipherTypography.copy(
-        default = cipherTypography.default.copy(fontFamily = fontFamily),
-        bold = cipherTypography.bold.copy(fontFamily = fontFamily)
+        default = cipherTypography.default.copy(fontFamily = cipherFontFamily),
+        bold = cipherTypography.bold.copy(fontFamily = cipherFontFamily)
     )
     val cipherColors = cipherColors
     val cipherViewDimensions = StandardViewDimen

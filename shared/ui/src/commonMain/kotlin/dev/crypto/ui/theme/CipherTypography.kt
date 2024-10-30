@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 expect fun getPlatformFontFamily(): FontFamily
 
-val fontFamily
+val cipherFontFamily: FontFamily
     @Composable get() = getPlatformFontFamily()
 
 @Immutable

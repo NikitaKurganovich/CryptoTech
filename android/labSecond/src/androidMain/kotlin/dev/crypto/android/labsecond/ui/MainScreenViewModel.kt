@@ -1,8 +1,13 @@
 package dev.crypto.android.labsecond.ui
 
 import androidx.lifecycle.ViewModel
+import dev.crypto.base.resources.ResultMessage
+import dev.crypto.labsecond.CryptoMode
 import dev.crypto.labsecond.IntKeyTriplet
 import dev.crypto.labsecond.RSA
+import dev.crypto.labsecond.SecondLabErrors
+import dev.crypto.labsecond.StringIntCipherKey
+import dev.crypto.labsecond.StringMessage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -11,12 +16,12 @@ import kotlinx.coroutines.flow.update
 class MainScreenViewModel : ViewModel() {
     private val _state = MutableStateFlow(
         MainScreenState(
-            isEncrypting = true,
+            encryptionMode = CryptoMode.Encrypting,
             messageFieldValue = "",
             pKeyFieldValue = "",
             qKeyFieldValue = "",
             eKeyFieldValue = "",
-            result = "",
+            result = ResultMessage.StringMessage(""),
             isError = false
         )
     )
@@ -32,10 +37,18 @@ class MainScreenViewModel : ViewModel() {
             is MainScreenIntent.EKeyFieldChange -> eKeyFieldChange(intent.key)
         }
 
-    private fun switchChange(isEncryption: Boolean) =
+    private fun switchChange(isEncryption: Boolean) {
         _state.update {
-            it.copy(isEncrypting = isEncryption)
+            it.copy(
+                encryptionMode = if (isEncryption) {
+                    CryptoMode.Encrypting
+                } else {
+                    CryptoMode.Decrypting
+                }
+            )
         }
+    }
+
 
     private fun messageFieldChange(value: String) =
         _state.update {
@@ -57,20 +70,24 @@ class MainScreenViewModel : ViewModel() {
             it.copy(eKeyFieldValue = value)
         }
 
-    private fun perform() = runCatching {
-        val rsa = RSA(
-            message = _state.value.messageFieldValue,
-            key = IntKeyTriplet(
-                p = _state.value.pKeyFieldValue.toInt(),
-                q = _state.value.qKeyFieldValue.toInt(),
-                e = _state.value.eKeyFieldValue.toInt()
+    private fun perform() {
+        runCatching<String> {
+            val rsa = RSA(
+                message = StringMessage(
+                    value = _state.value.messageFieldValue,
+                    mode = _state.value.encryptionMode
+                ).formatMessage().getOrThrow(),
+                key = IntKeyTriplet(
+                    p = StringIntCipherKey(_state.value.pKeyFieldValue).formatKey().getOrThrow(),
+                    q = StringIntCipherKey(_state.value.qKeyFieldValue).formatKey().getOrThrow(),
+                    e = StringIntCipherKey(_state.value.eKeyFieldValue).formatKey().getOrThrow()
+                )
             )
-        )
-        if (_state.value.isEncrypting) {
-            rsa.encrypt().processResult()
-        } else {
-            rsa.decrypt().processResult()
-        }
+            when (_state.value.encryptionMode) {
+                CryptoMode.Decrypting -> rsa.decrypt().getOrThrow()
+                CryptoMode.Encrypting -> rsa.encrypt().getOrThrow()
+            }
+        }.processResult()
     }
 
     private fun <T> Result<T>.processResult() =
@@ -78,7 +95,7 @@ class MainScreenViewModel : ViewModel() {
             _state.update {
                 it.copy(
                     isError = false,
-                    result = newValue.toString()
+                    result = ResultMessage.StringMessage(newValue.toString())
                 )
             }
         }
@@ -86,7 +103,11 @@ class MainScreenViewModel : ViewModel() {
                 _state.update {
                     it.copy(
                         isError = true,
-                        result = error.message.toString()
+                        result = ResultMessage.IdMessage(
+                            id = error.message?.let {
+                                SecondLabErrors.valueOf(it)
+                            } ?: SecondLabErrors.Unspecified
+                        )
                     )
                 }
             }

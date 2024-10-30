@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -20,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import dev.crypto.labsecond.CryptoMode
 import dev.crypto.labsecond.SecondLabString
 import dev.crypto.labsecond.resources.second_button_action
 import dev.crypto.labsecond.resources.second_cipher_switch_decrypt
@@ -64,7 +66,7 @@ fun ScreenContent(
                 .fillMaxWidth(),
             firstOptionText = stringResource(SecondLabString.second_cipher_switch_encrypt),
             secondOptionText = stringResource(SecondLabString.second_cipher_switch_decrypt),
-            isFirstSelected = state.isEncrypting,
+            isFirstSelected = state.encryptionMode == CryptoMode.Encrypting,
             onClick = { onIntentReceived(MainScreenIntent.SwitchChange(it)) }
         )
         InputFields(
@@ -77,13 +79,15 @@ fun ScreenContent(
             text = stringResource(SecondLabString.second_button_action),
             onClick =  { onIntentReceived(MainScreenIntent.Perform) }
         )
-        CipherResultView(
-            modifier = Modifier
-                .fillMaxWidth(),
-            infoText = stringResource(SecondLabString.second_result),
-            resultText = remember(state.result) { state.result },
-            isError = remember(state.isError) { state.isError }
-        )
+        SelectionContainer {
+            CipherResultView(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                infoText = stringResource(SecondLabString.second_result),
+                resultText = state.result.getString(),
+                isError = remember(state.isError) { state.isError }
+            )
+        }
     }
 }
 

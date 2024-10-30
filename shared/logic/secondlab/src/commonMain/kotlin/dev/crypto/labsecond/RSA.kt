@@ -32,7 +32,7 @@ data class RSA(
         block: () -> String
     ): Result<String> = runCatching {
         require(isPrime(key.p) && isPrime(key.q)) {
-            "p and q must be prime numbers"
+            SecondLabErrors.QAndPNotPrime
         }
         require(
             gcd(
@@ -40,13 +40,13 @@ data class RSA(
                 (key.p - 1) * (key.q - 1)
             ) == 1
         ) {
-            "e must be coprime with Φ = (p - 1) * (q - 1)"
+            SecondLabErrors.ENotCoprime
         }
         require(key.e > 1 && key.e < (key.p - 1) * (key.q - 1)) {
-            "e must be less than Φ = (p - 1) * (q - 1)"
+            SecondLabErrors.EGreaterThanPhi
         }
         require(key.p * key.q > 26) {
-            "n = p * q must be greater than 26"
+            SecondLabErrors.LowQAndPProduct
         }
         block()
     }
