@@ -1,6 +1,5 @@
 package androidkit.kit
 
-import androidkit.theme.CipherTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import dev.crypto.ui.theme.CipherTheme
 
 @Composable
 fun CipherResultView(

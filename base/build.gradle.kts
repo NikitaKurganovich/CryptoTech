@@ -1,7 +1,5 @@
-import extensions.commonMainDependencies
-
 plugins{
-    id("plugin.language")
+    id("plugin.compose")
 }
 
 android {

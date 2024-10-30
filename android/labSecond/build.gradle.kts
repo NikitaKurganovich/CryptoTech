@@ -17,6 +17,5 @@ android {
 }
 
 dependencies {
-    implementation(project(":shared:ui"))
-    implementation(project(":shared:logic:labSecond"))
+    implementation(project(":shared:logic:secondlab"))
 }

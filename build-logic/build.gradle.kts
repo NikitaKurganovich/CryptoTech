@@ -26,6 +26,11 @@ gradlePlugin {
             implementationClass = "plugins.CommonLanguagePlugin"
         }
 
+        register("plugin.compose"){
+            id = "plugin.compose"
+            implementationClass = "plugins.CommonComposePlugin"
+        }
+
         register("desktop.application"){
             id = "desktop.application"
             implementationClass = "apps.DesktopApplication"

@@ -5,7 +5,6 @@ import extensions.commonTestDependencies
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import setups.AndroidSetup
-import setups.CommonComposePlugin
 
 class FeaturePlugin: Plugin<Project> {
     override fun apply(project: Project) {

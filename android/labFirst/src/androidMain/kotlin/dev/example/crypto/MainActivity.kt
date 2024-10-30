@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import dev.example.crypto.ui.MainScreen
-import androidkit.theme.CipherTheme
+import dev.crypto.ui.theme.CipherTheme
 
 class MainActivity: ComponentActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -57,7 +57,7 @@ import androidkit.kit.CipherTextWithBord
 import androidkit.kit.EdgeValues
 import androidkit.kit.CipherResultView
 import androidkit.kit.customBorder
-import androidkit.theme.CipherTheme
+import dev.crypto.ui.theme.CipherTheme
 import dev.crypto.labfirst.R
 
 @Composable

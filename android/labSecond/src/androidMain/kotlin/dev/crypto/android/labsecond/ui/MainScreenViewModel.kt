@@ -71,7 +71,7 @@ class MainScreenViewModel : ViewModel() {
         } else {
             rsa.decrypt().processResult()
         }
-    }.processResult()
+    }
 
     private fun <T> Result<T>.processResult() =
         this.onSuccess { newValue ->

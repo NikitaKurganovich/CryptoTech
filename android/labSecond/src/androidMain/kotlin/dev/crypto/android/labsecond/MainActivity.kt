@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import dev.crypto.android.labsecond.ui.MainScreen
-import androidkit.theme.CipherTheme
+import dev.crypto.ui.theme.CipherTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

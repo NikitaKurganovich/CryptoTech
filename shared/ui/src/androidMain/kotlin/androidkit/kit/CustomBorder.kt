@@ -14,7 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onPlaced
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
-import androidkit.theme.CipherTheme
+import dev.crypto.ui.theme.CipherTheme
 
 @Composable
 fun Modifier.customBorder(

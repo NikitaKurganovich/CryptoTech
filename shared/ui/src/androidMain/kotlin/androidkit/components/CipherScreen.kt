@@ -1,6 +1,5 @@
 package androidkit.components
 
-import androidkit.theme.CipherTheme
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -22,6 +21,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import dev.crypto.shared.ui.R
+import dev.crypto.ui.theme.CipherTheme
 
 @Composable
 fun CipherScreen(

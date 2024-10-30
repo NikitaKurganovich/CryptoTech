@@ -1,6 +1,6 @@
 package androidkit.kit
 
-import androidkit.theme.CipherTheme
+import dev.crypto.ui.theme.CipherTheme
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.AnimationVector
 import androidx.compose.animation.core.AnimationVector1D

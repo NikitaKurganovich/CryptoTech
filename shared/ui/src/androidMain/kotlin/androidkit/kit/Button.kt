@@ -1,6 +1,5 @@
 package androidkit.kit
 
-import androidkit.theme.CipherTheme
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material3.Button
@@ -10,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
+import dev.crypto.ui.theme.CipherTheme
 
 @Composable
 fun CipherButton(

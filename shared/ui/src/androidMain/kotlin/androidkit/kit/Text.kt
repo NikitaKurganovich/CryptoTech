@@ -10,7 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidkit.theme.CipherTheme
+import dev.crypto.ui.theme.CipherTheme
 
 @Composable
 fun CipherTextWithBord(
@@ -19,7 +19,7 @@ fun CipherTextWithBord(
     isError: Boolean = false,
     edges: EdgeValues = EdgeValues(
         horizontal = CipherTheme.viewDimensions.textCornerEdgeWidth,
-        vertical = CipherTheme.viewDimensions.textCornerEdgeHeight
+    vertical = CipherTheme.viewDimensions.textCornerEdgeHeight
     ),
     textStyle: TextStyle = CipherTheme.typography.default,
     trailingIcon: @Composable (() -> Unit)? = null

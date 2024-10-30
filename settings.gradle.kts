@@ -42,10 +42,15 @@ includeBuild("build-logic")
 include(":base")
 include(":basetest")
 
+include(":desktop:lab")
 
-include(":desktop:labFirst")
+include(":desktop:feature:firstlab")
+include(":desktop:feature:secondlab")
+include(":desktop:feature:thirdlab")
 
 include(":android:labFirst")
 
-include(":shared:logic:labSecond")
+include(":shared:logic:firstlab")
+include(":shared:logic:secondlab")
+
 include(":shared:ui")
