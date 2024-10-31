@@ -13,7 +13,7 @@ data class RSA(
     override fun encrypt(): Result<String> = runWithInitCheck {
         message.map { char ->
             val i = char.lowercaseChar() - 'a' + 1
-            i.toDouble().pow(key.e).toInt() % n
+            i.toBigDecimal().pow(key.e) % n.toBigDecimal()
         }.joinToString(separator = " ")
     }
 

@@ -3,8 +3,8 @@
 
 # Desktop run:
 
-## First lab:
+## Desktop lab:
 Macos:
 ```shell
-./gradlew desktop:labFirst:run
+./gradlew desktop:lab:run
 ```

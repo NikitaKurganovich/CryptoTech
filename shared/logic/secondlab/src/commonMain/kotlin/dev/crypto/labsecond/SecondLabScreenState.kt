@@ -3,7 +3,7 @@ package dev.crypto.android.labsecond.ui
 import dev.crypto.base.resources.ResultMessage
 import dev.crypto.labsecond.CryptoMode
 
-data class MainScreenState(
+data class SecondLabScreenState(
     val encryptionMode: CryptoMode,
     val messageFieldValue: String,
     val qKeyFieldValue: String,

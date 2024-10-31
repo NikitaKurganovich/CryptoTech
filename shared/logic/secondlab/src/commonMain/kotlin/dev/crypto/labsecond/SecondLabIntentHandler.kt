@@ -1,20 +1,14 @@
-package dev.crypto.android.labsecond.ui
+package dev.crypto.labsecond
 
-import androidx.lifecycle.ViewModel
+import dev.crypto.android.labsecond.ui.SecondLabScreenState
+import dev.crypto.base.interfaces.IntentHandler
 import dev.crypto.base.resources.ResultMessage
-import dev.crypto.labsecond.CryptoMode
-import dev.crypto.labsecond.IntKeyTriplet
-import dev.crypto.labsecond.RSA
-import dev.crypto.labsecond.SecondLabErrors
-import dev.crypto.labsecond.SecondLabIntent
-import dev.crypto.labsecond.StringIntCipherKey
-import dev.crypto.labsecond.StringMessage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-class MainScreenViewModel : ViewModel() {
+class SecondLabIntentHandler : IntentHandler<SecondLabScreenState, SecondLabIntent> {
     private val _state = MutableStateFlow(
         SecondLabScreenState(
             encryptionMode = CryptoMode.Encrypting,
@@ -26,9 +20,9 @@ class MainScreenViewModel : ViewModel() {
             isError = false
         )
     )
-    val state: StateFlow<SecondLabScreenState> = _state.asStateFlow()
+    override val state: StateFlow<SecondLabScreenState> = _state.asStateFlow()
 
-    fun processIntent(intent: SecondLabIntent) =
+    override fun processIntent(intent: SecondLabIntent) =
         when (intent) {
             is SecondLabIntent.Perform -> perform()
             is SecondLabIntent.SwitchChange -> switchChange(intent.switch)

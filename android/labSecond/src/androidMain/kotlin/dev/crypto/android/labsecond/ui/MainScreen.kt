@@ -22,6 +22,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.crypto.labsecond.CryptoMode
+import dev.crypto.labsecond.SecondLabIntent
 import dev.crypto.labsecond.SecondLabString
 import dev.crypto.labsecond.resources.second_button_action
 import dev.crypto.labsecond.resources.second_cipher_switch_decrypt
@@ -50,8 +51,8 @@ fun MainScreen(
 
 @Composable
 fun ScreenContent(
-    state: MainScreenState,
-    onIntentReceived: (MainScreenIntent) -> Unit,
+    state: SecondLabScreenState,
+    onIntentReceived: (SecondLabIntent) -> Unit,
 ){
     Column(
         modifier = Modifier
@@ -67,7 +68,7 @@ fun ScreenContent(
             firstOptionText = stringResource(SecondLabString.second_cipher_switch_encrypt),
             secondOptionText = stringResource(SecondLabString.second_cipher_switch_decrypt),
             isFirstSelected = state.encryptionMode == CryptoMode.Encrypting,
-            onClick = { onIntentReceived(MainScreenIntent.SwitchChange(it)) }
+            onClick = { onIntentReceived(SecondLabIntent.SwitchChange(it)) }
         )
         InputFields(
             state = remember(state) { state },
@@ -77,7 +78,7 @@ fun ScreenContent(
             modifier = Modifier
                 .fillMaxWidth(),
             text = stringResource(SecondLabString.second_button_action),
-            onClick =  { onIntentReceived(MainScreenIntent.Perform) }
+            onClick =  { onIntentReceived(SecondLabIntent.Perform) }
         )
         SelectionContainer {
             CipherResultView(
@@ -93,8 +94,8 @@ fun ScreenContent(
 
 @Composable
 private fun ColumnScope.InputFields(
-    state: MainScreenState,
-    onIntentReceived: (MainScreenIntent) -> Unit
+    state: SecondLabScreenState,
+    onIntentReceived: (SecondLabIntent) -> Unit
 ) {
     CipherOutlinedTextField(
         modifier = Modifier
@@ -102,7 +103,7 @@ private fun ColumnScope.InputFields(
             .padding(vertical = CipherTheme.dimensions.mediumMinus),
         value = state.messageFieldValue,
         onValueChange = {
-            onIntentReceived(MainScreenIntent.MessageFieldChange(it))
+            onIntentReceived(SecondLabIntent.MessageFieldChange(it))
         },
         placeHolder = {
             CipherText(
@@ -117,7 +118,7 @@ private fun ColumnScope.InputFields(
             .padding(vertical = CipherTheme.dimensions.mediumMinus),
         value = state.pKeyFieldValue,
         onValueChange = {
-            onIntentReceived(MainScreenIntent.PKeyFieldChange(it))
+            onIntentReceived(SecondLabIntent.PKeyFieldChange(it))
         },
         placeHolder = {
             CipherText(
@@ -135,7 +136,7 @@ private fun ColumnScope.InputFields(
             .padding(vertical = CipherTheme.dimensions.mediumMinus),
         value = state.qKeyFieldValue,
         onValueChange = {
-            onIntentReceived(MainScreenIntent.QKeyFieldChange(it))
+            onIntentReceived(SecondLabIntent.QKeyFieldChange(it))
         },
         placeHolder = {
             CipherText(
@@ -153,7 +154,7 @@ private fun ColumnScope.InputFields(
             .padding(vertical = CipherTheme.dimensions.mediumMinus),
         value = state.eKeyFieldValue,
         onValueChange = {
-            onIntentReceived(MainScreenIntent.EKeyFieldChange(it))
+            onIntentReceived(SecondLabIntent.EKeyFieldChange(it))
         },
         placeHolder = {
             CipherText(
