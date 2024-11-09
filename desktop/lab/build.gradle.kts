@@ -7,9 +7,6 @@ plugins{
 
 group = "dev.crypto.desktop.lab"
 version = "1.0.0"
-dependencies {
-    testImplementation(project(":android:labFirst"))
-}
 
 compose.desktop{
     application{

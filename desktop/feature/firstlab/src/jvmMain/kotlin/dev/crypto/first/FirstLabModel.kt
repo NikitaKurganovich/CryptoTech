@@ -1,10 +1,10 @@
-package dev.example.crypto.ui
+package dev.crypto.first
 
-import androidx.lifecycle.ViewModel
+import cafe.adriel.voyager.core.model.ScreenModel
 import dev.crypto.labfirst.FirstLabIntent
 import dev.crypto.labfirst.FirstLabIntentHandler
 
-class MainScreenViewModel : ViewModel() {
+class FirstLabModel : ScreenModel {
     private val intentHandler = FirstLabIntentHandler()
 
     val state = intentHandler.state

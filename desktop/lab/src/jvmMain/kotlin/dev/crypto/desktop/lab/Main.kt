@@ -22,7 +22,7 @@ import dev.crypto.desktop.lab.lab.generated.resources.first_lab
 import dev.crypto.desktop.lab.lab.generated.resources.second_lab
 import dev.crypto.desktop.lab.ui.MainScreen
 import dev.crypto.desktop.secondlab.SecondLabScreen
-import dev.crypto.first.ui.FirstLabScreen
+import dev.crypto.first.FirstLabScreen
 import dev.crypto.ui.theme.CipherTheme
 import org.jetbrains.compose.resources.stringResource
 

@@ -1,3 +1,5 @@
+import extensions.androidMainDependencies
+
 plugins {
     id("android.application")
 }
@@ -14,4 +16,8 @@ android {
             )
         }
     }
+}
+
+androidMainDependencies {
+    implementation(project(":shared:logic:firstlab"))
 }

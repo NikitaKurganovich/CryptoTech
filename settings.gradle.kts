@@ -2,9 +2,6 @@
 
 import org.gradle.api.initialization.resolve.RepositoriesMode.FAIL_ON_PROJECT_REPOS
 
-include(":android:labsecond")
-
-
 pluginManagement {
     repositories {
         google {
@@ -49,6 +46,7 @@ include(":desktop:feature:secondlab")
 include(":desktop:feature:thirdlab")
 
 include(":android:labFirst")
+include(":android:labsecond")
 
 include(":shared:logic:firstlab")
 include(":shared:logic:secondlab")
