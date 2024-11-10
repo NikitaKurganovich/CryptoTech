@@ -1,0 +1,8 @@
+<resources>
+    <string name="third_letters">Letters</string>
+    <string name="third_digits">Digits</string>
+    <string name="third_special_characters_android">Special Characters</string>
+    <string name="third_special_characters_desktop">Special Chars</string>
+    <string name="third_password_config">Current Password Config</string>
+
+</resources>

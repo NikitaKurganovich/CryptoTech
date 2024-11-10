@@ -44,6 +44,8 @@ ui-desktop = "1.7.0"
 uiToolingPreviewAndroid = "1.7.4"
 uiTextGoogleFonts = "1.7.4"
 
+nacular-measured = "0.4.1"
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
@@ -62,6 +64,8 @@ gradleplugins-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", v
 gradleplugins-kotlinx-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
 
 androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "androidxTest" }
+
+nacular-measured = { module = "io.nacular.measured:measured", version.ref = "nacular-measured" }
 
 # Android
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -92,7 +96,6 @@ kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutine
 kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 
-# Voyager
 material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
 runner = { module = "com.android.support.test:runner", version.ref = "runner" }
 ui = { module = "androidx.compose.ui:ui", version.ref = "uiTextGoogleFontsVersion" }

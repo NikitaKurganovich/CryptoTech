@@ -50,5 +50,7 @@ include(":android:labsecond")
 
 include(":shared:logic:firstlab")
 include(":shared:logic:secondlab")
+include(":shared:logic:thirdlab")
+
 
 include(":shared:ui")
