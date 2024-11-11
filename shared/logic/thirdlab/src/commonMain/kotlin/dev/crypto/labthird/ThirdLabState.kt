@@ -6,7 +6,9 @@ data class ThirdLabState(
     val isLettersSelected: Boolean,
     val isDigitsSelected: Boolean,
     val isSpecialCharactersSelected: Boolean,
+    val isAllSelected: Boolean,
     val passwordLength: Int?,
     val actualCharset: List<Char>,
-    val resultMessage: ResultMessage
+    val resultMessage: ResultMessage,
+    val isError: Boolean
 )

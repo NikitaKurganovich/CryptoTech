@@ -1,9 +1,7 @@
 package dev.crypto.android.labsecond.ui
 
 import androidkit.components.CipherScreen
-import androidkit.kit.CipherButton
 import androidkit.kit.CipherOutlinedTextField
-import androidkit.kit.CipherResultView
 import androidkit.kit.CipherSwitch
 import androidkit.kit.CipherText
 import dev.crypto.ui.theme.CipherTheme
@@ -32,6 +30,8 @@ import dev.crypto.labsecond.resources.second_message_placeholder
 import dev.crypto.labsecond.resources.second_p_key_placeholder
 import dev.crypto.labsecond.resources.second_q_key_placeholder
 import dev.crypto.labsecond.resources.second_result
+import dev.crypto.ui.kit.CipherButton
+import dev.crypto.ui.kit.CipherResultView
 import org.jetbrains.compose.resources.stringResource
 
 @Composable

@@ -20,30 +20,66 @@ class ThirdLabIntentHandler(
             isLettersSelected = false,
             isSpecialCharactersSelected = false,
             passwordLength = null,
+            isAllSelected = false,
             actualCharset = emptyList(),
-            resultMessage = ResultMessage.StringMessage("")
+            resultMessage = ResultMessage.StringMessage(""),
+            isError = false
         )
     )
 
-    override val state: StateFlow<ThirdLabState> = _state.asStateFlow()
+    override val state: StateFlow<ThirdLabState> = _state.asStateFlow().also {
+        _state.update {
+            it.copy(isAllSelected = it.isDigitsSelected && it.isLettersSelected && it.isSpecialCharactersSelected)
+        }
+    }
 
     override fun processIntent(intent: ThirdLabIntent) {
         runBlocking {
             when (intent) {
-                is ThirdLabIntent.SetGenerationOption -> TODO()
+                is ThirdLabIntent.SetGenerationOption -> changeGenerationOption(intent.option)
                 is ThirdLabIntent.GeneratePassword -> generatePassword()
-                is ThirdLabIntent.AllOptionsSelected -> TODO()
+                is ThirdLabIntent.AllOptionsSelected -> addAllOptions()
             }
         }
     }
 
+    private fun addAllOptions() {
+        changeGenerationOption(GenerationOptions.Digits)
+        changeGenerationOption(GenerationOptions.Letters)
+        changeGenerationOption(GenerationOptions.SpecialCharacters)
+    }
+
+    private fun changeGenerationOption(option: GenerationOptions) {
+        _state.update {
+            when (option) {
+                GenerationOptions.Digits ->
+                    it.copy(isDigitsSelected = !it.isDigitsSelected)
+
+                GenerationOptions.SpecialCharacters ->
+                    it.copy(isSpecialCharactersSelected = !it.isSpecialCharactersSelected)
+
+                GenerationOptions.Letters -> it.copy(isLettersSelected = !it.isLettersSelected)
+            }
+        }
+        updatePasswordLength()
+    }
+
     private fun generatePassword() {
+        configureCharset()
         val password = state.value.passwordLength?.let {
             CharsetBasedPassword(
-                charset = state.value.actualCharset,
+                charset = _state.value.actualCharset,
                 requiredLength = it
             ).generatePassword()
         } ?: error("")
+        _state.update {
+            it.copy(
+                resultMessage = ResultMessage.IdMessage(
+                    id = ThirdLabSuccessResults.PasswordGenerated,
+                    args = arrayOf(password)
+                )
+            )
+        }
     }
 
     private fun configureCharset() {

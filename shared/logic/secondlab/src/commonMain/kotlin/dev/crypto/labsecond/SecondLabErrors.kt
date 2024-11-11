@@ -1,6 +1,6 @@
 package dev.crypto.labsecond
 
-import dev.crypto.base.resources.CryptoError
+import dev.crypto.base.resources.CryptoResId
 import dev.crypto.labsecond.resources.second_e_greater_phi_error
 import dev.crypto.labsecond.resources.second_e_not_coprime_error
 import dev.crypto.labsecond.resources.second_key_must_be_int_error
@@ -12,7 +12,7 @@ import dev.crypto.labsecond.resources.second_not_prime_q_and_p_error
 import dev.crypto.labsecond.resources.second_unspecified
 import org.jetbrains.compose.resources.StringResource
 
-enum class SecondLabErrors(override val errorRes: StringResource): CryptoError {
+enum class SecondLabErrors(override val errorRes: StringResource): CryptoResId {
     Unspecified(SecondLabString.second_unspecified),
 
     LowQAndPProduct(SecondLabString.second_low_p_and_q_product_error),

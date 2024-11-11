@@ -26,6 +26,10 @@ class TestThat<T>(private val valueToTest: T) {
         }
     }
 
+    fun assertNotNull() {
+        assert(valueToTest != null)
+    }
+
     private fun <T> illegalStateResult(
         message: String,
     ): Result<T> = runCatching {

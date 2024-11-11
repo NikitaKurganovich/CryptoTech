@@ -5,4 +5,8 @@
     <string name="third_special_characters_desktop">Special Chars</string>
     <string name="third_password_config">Current Password Config</string>
 
+    <string name="third_password_generated">Generated Password: %s</string>
+
+    <string name="third_charset_empty_warning">Charset is empty</string>
+    <string name="third_length_empty_warning">Password length is empty</string>
 </resources>
