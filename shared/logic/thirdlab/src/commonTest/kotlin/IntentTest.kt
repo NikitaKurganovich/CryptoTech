@@ -2,11 +2,13 @@ import dev.crypto.base.test.TestThat
 import dev.crypto.labthird.BruteForceSpeed
 import dev.crypto.labthird.GenerationOptions
 import dev.crypto.labthird.PasswordStrengthRequirements
-import dev.crypto.labthird.PasswordUnit
+import dev.crypto.labthird.PasswordUnit.Companion.password
 import dev.crypto.labthird.ThirdLabIntent
 import dev.crypto.labthird.ThirdLabIntentHandler
+import dev.crypto.labthird.TimeWithDays.Companion.day
 import io.nacular.measured.units.Measure
 import io.nacular.measured.units.Time
+import io.nacular.measured.units.Time.Companion.hours
 import io.nacular.measured.units.div
 import io.nacular.measured.units.times
 import org.junit.Before
@@ -14,17 +16,13 @@ import java.math.BigDecimal
 import kotlin.test.Test
 
 class IntentHandlerTest {
-
     private lateinit var intentHandler: ThirdLabIntentHandler
-
-    private val password = PasswordUnit()
-    private val hours = Time.hours
 
     private val testConfig = object : PasswordStrengthRequirements {
         override val probability: BigDecimal
             get() = BigDecimal.valueOf(1, 8)
         override val bruteForceSpeed: BruteForceSpeed
-            get() = 100 * password / hours
+            get() = 100 * password / day
         override val timeToBruteForce: Measure<Time>
             get() = 20 * hours
     }
@@ -193,7 +191,7 @@ class IntentHandlerTest {
         )
         TestThat(
             intentHandler.state.value.passwordLength
-        ).assert(11)
+        ).assert(9)
         intentHandler.processIntent(
             ThirdLabIntent.SetGenerationOption(
                 GenerationOptions.Letters
@@ -201,6 +199,6 @@ class IntentHandlerTest {
         )
         TestThat(
             intentHandler.state.value.passwordLength
-        ).assert(6)
+        ).assert(5)
     }
 }

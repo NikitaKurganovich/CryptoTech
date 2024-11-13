@@ -11,12 +11,12 @@ sealed interface ThirdLabResults : CryptoResId
 enum class ThirdLabSuccessResults(
     override val errorRes: StringResource
 ) : ThirdLabResults {
-    PasswordGenerated(ThirdLabResources.third_password_generated),
+    PasswordGenerated(ThirdLabString.third_password_generated),
 }
 
 enum class ThirdLabErrorResults(
     override val errorRes: StringResource
 ): ThirdLabResults{
-    CharsetEmpty(ThirdLabResources.third_charset_empty_warning),
-    PasswordLengthTooShort(ThirdLabResources.third_length_empty_warning)
+    CharsetEmpty(ThirdLabString.third_charset_empty_warning),
+    PasswordLengthTooShort(ThirdLabString.third_length_empty_warning)
 }

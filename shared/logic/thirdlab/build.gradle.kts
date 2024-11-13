@@ -9,7 +9,7 @@ android {
 }
 
 commonMainDependencies {
-    implementation(libs.nacular.measured)
+    api(libs.nacular.measured)
 }
 
 compose.resources {

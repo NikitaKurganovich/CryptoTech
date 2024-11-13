@@ -47,10 +47,10 @@ include(":desktop:feature:thirdlab")
 
 include(":android:labFirst")
 include(":android:labsecond")
+include(":android:labthird")
 
 include(":shared:logic:firstlab")
 include(":shared:logic:secondlab")
 include(":shared:logic:thirdlab")
-
 
 include(":shared:ui")

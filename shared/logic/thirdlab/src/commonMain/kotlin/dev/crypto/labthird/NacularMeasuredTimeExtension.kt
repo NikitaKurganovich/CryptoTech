@@ -2,6 +2,9 @@ package dev.crypto.labthird
 
 import io.nacular.measured.units.Time
 
-val Time.days: Time
-    get() = Time("days",  24 * Time.hours.ratio)
+class TimeWithDays(suffix: String, ratio: Double) : Time(suffix, ratio) {
+    companion object {
+        val day = TimeWithDays("day", 24 * hours.ratio)
+    }
+}
 
