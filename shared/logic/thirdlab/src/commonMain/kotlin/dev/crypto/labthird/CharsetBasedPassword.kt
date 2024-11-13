@@ -8,7 +8,7 @@ class CharsetBasedPassword(
 ) {
     init {
         require(charset.isNotEmpty()) { ThirdLabErrorResults.CharsetEmpty }
-        require(requiredLength >= 0) { ThirdLabErrorResults.PasswordLengthTooShort }
+        require(requiredLength > 0) { ThirdLabErrorResults.PasswordLengthTooShort }
     }
 
     fun generatePassword(): String {

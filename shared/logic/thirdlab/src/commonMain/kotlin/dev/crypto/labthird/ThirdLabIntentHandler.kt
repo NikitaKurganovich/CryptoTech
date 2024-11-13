@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.runBlocking
 import kotlin.math.log
 
 class ThirdLabIntentHandler(
@@ -34,19 +33,29 @@ class ThirdLabIntentHandler(
     }
 
     override fun processIntent(intent: ThirdLabIntent) {
-        runBlocking {
+        runCatching {
             when (intent) {
                 is ThirdLabIntent.SetGenerationOption -> changeGenerationOption(intent.option)
                 is ThirdLabIntent.GeneratePassword -> generatePassword()
                 is ThirdLabIntent.AllOptionsSelected -> addAllOptions()
             }
+        }.onFailure { error ->
+            _state.update {
+                it.copy(
+                    isError = true,
+                    resultMessage = ResultMessage.IdMessage(
+                        ThirdLabErrorResults.valueOf(
+                            error.message ?: error(error.message.toString())
+                        )
+                    )
+                )
+            }
         }
+
     }
 
     private fun addAllOptions() {
-        changeGenerationOption(GenerationOptions.Digits)
-        changeGenerationOption(GenerationOptions.Letters)
-        changeGenerationOption(GenerationOptions.SpecialCharacters)
+        for (option in GenerationOptions.entries) changeGenerationOption(option)
     }
 
     private fun changeGenerationOption(option: GenerationOptions) {
@@ -61,6 +70,7 @@ class ThirdLabIntentHandler(
                 GenerationOptions.Letters -> it.copy(isLettersSelected = !it.isLettersSelected)
             }
         }
+        configureCharset()
         updatePasswordLength()
     }
 
@@ -71,7 +81,7 @@ class ThirdLabIntentHandler(
                 charset = _state.value.actualCharset,
                 requiredLength = it
             ).generatePassword()
-        } ?: error("")
+        } ?: error(ThirdLabErrorResults.CharsetEmpty)
         _state.update {
             it.copy(
                 resultMessage = ResultMessage.IdMessage(
@@ -91,16 +101,28 @@ class ThirdLabIntentHandler(
 
     private fun getCharset(): List<Char> =
         with(state.value) {
-            if (isDigitsSelected) GenerationOptions.Digits.charset else emptyList<Char>() +
-            if (isSpecialCharactersSelected) GenerationOptions.SpecialCharacters.charset
-                else emptyList<Char>() +
-            if (isLettersSelected) GenerationOptions.Letters.charset else emptyList()
+            if (isDigitsSelected) {
+                GenerationOptions.Digits.charset
+            } else {
+                emptyList<Char>()
+            } +
+                    if (isSpecialCharactersSelected) {
+                        GenerationOptions.SpecialCharacters.charset
+                    } else {
+                        emptyList<Char>()
+                    } +
+                    if (isLettersSelected) {
+                        GenerationOptions.Letters.charset
+                    } else {
+                        emptyList()
+                    }
         }
 
 
     private fun updatePasswordLength() {
-        val x = requirements.bruteForceSpeed * requirements.timeToBruteForce
-        val base = requirements.probability * state.value.actualCharset.size.toBigDecimal()
+        val x =
+            (requirements.bruteForceSpeed * requirements.timeToBruteForce) / requirements.probability
+        val base = state.value.actualCharset.size
         _state.update {
             it.copy(
                 passwordLength = log(

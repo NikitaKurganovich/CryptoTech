@@ -1,4 +1,3 @@
-import androidx.compose.ui.geometry.times
 import dev.crypto.base.test.TestThat
 import dev.crypto.labthird.BruteForceSpeed
 import dev.crypto.labthird.GenerationOptions
@@ -23,7 +22,7 @@ class IntentHandlerTest {
 
     private val testConfig = object : PasswordStrengthRequirements {
         override val probability: BigDecimal
-            get() = BigDecimal.valueOf(1, -8)
+            get() = BigDecimal.valueOf(1, 8)
         override val bruteForceSpeed: BruteForceSpeed
             get() = 100 * password / hours
         override val timeToBruteForce: Measure<Time>
@@ -135,7 +134,73 @@ class IntentHandlerTest {
         TestThat(
             intentHandler.state.value.resultMessage
         ).assertNotNull()
+        println("Password length: ${intentHandler.state.value.passwordLength}")
+        println("Password: ${intentHandler.state.value.resultMessage}")
     }
 
+    @Test
+    fun `digits charset for correctly updated`() {
+        intentHandler.processIntent(
+            ThirdLabIntent.SetGenerationOption(
+                GenerationOptions.Digits
+            )
+        )
+        TestThat(
+            intentHandler.state.value.actualCharset
+        ).assert(GenerationOptions.Digits.charset)
+    }
 
+    @Test
+    fun `special characters charset for correctly updated`() {
+        intentHandler.processIntent(
+            ThirdLabIntent.SetGenerationOption(
+                GenerationOptions.SpecialCharacters
+            )
+        )
+        TestThat(
+            intentHandler.state.value.actualCharset
+        ).assert(GenerationOptions.SpecialCharacters.charset)
+    }
+
+    @Test
+    fun `letters charset for correctly updated`() {
+        intentHandler.processIntent(
+            ThirdLabIntent.SetGenerationOption(
+                GenerationOptions.Letters
+            )
+        )
+        TestThat(
+            intentHandler.state.value.actualCharset
+        ).assert(GenerationOptions.Letters.charset)
+    }
+
+    @Test
+    fun `all charset for correctly updated`() {
+        intentHandler.processIntent(
+            ThirdLabIntent.AllOptionsSelected
+        )
+        TestThat(
+            intentHandler.state.value.actualCharset
+        ).assert(GenerationOptions.Digits.charset + GenerationOptions.SpecialCharacters.charset + GenerationOptions.Letters.charset)
+    }
+
+    @Test
+    fun `password length change on options change`() {
+        intentHandler.processIntent(
+            ThirdLabIntent.SetGenerationOption(
+                GenerationOptions.Digits
+            )
+        )
+        TestThat(
+            intentHandler.state.value.passwordLength
+        ).assert(11)
+        intentHandler.processIntent(
+            ThirdLabIntent.SetGenerationOption(
+                GenerationOptions.Letters
+            )
+        )
+        TestThat(
+            intentHandler.state.value.passwordLength
+        ).assert(6)
+    }
 }
