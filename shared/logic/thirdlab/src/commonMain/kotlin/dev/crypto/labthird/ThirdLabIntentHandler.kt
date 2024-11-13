@@ -74,7 +74,7 @@ class ThirdLabIntentHandler(
                 }
             }
         }
-
+        configureCharset()
     }
 
     private fun changeGenerationOption(option: GenerationOptions) {
@@ -88,10 +88,9 @@ class ThirdLabIntentHandler(
 
                 GenerationOptions.Letters -> it.copy(isLettersSelected = !it.isLettersSelected)
             }
-        }.also {
-            configureCharset()
-            updatePasswordLength()
         }
+        configureCharset()
+        updatePasswordLength()
     }
 
     private fun generatePassword() {
@@ -117,6 +116,7 @@ class ThirdLabIntentHandler(
         _state.update {
             it.copy(actualCharset = charset)
         }
+        updatePasswordLength()
     }
 
     private fun getCharset(): List<Char> =
@@ -145,10 +145,12 @@ class ThirdLabIntentHandler(
         val base = state.value.actualCharset.size
         _state.update {
             it.copy(
-                passwordLength = log(
-                    x = x.amount,
-                    base = base.toDouble()
-                ).toInt()
+                passwordLength = if (base != 0) {
+                    log(
+                        x = x.amount,
+                        base = base.toDouble()
+                    ).toInt()
+                } else null
             )
         }
     }

@@ -130,7 +130,7 @@ class IntentHandlerTest {
             ThirdLabIntent.GeneratePassword
         )
         TestThat(
-            intentHandler.state.value.resultMessage
+            intentHandler.state.value.passwordLength
         ).assertNotNull()
         println("Password length: ${intentHandler.state.value.passwordLength}")
         println("Password: ${intentHandler.state.value.resultMessage}")
