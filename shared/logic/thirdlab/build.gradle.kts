@@ -10,6 +10,7 @@ android {
 
 commonMainDependencies {
     api(libs.nacular.measured)
+    api(libs.vinceglb.filekit)
 }
 
 compose.resources {

@@ -15,6 +15,7 @@ class ThirdLabIntentHandler(
 
     private val _state = MutableStateFlow(
         ThirdLabState(
+            requirements = requirements,
             isDigitsSelected = false,
             isLettersSelected = false,
             isSpecialCharactersSelected = false,
@@ -26,13 +27,12 @@ class ThirdLabIntentHandler(
         )
     )
 
-    override val state: StateFlow<ThirdLabState> = _state.asStateFlow().also {
+    override val state: StateFlow<ThirdLabState> = _state.asStateFlow()
+
+    override fun processIntent(intent: ThirdLabIntent) {
         _state.update {
             it.copy(isAllSelected = it.isDigitsSelected && it.isLettersSelected && it.isSpecialCharactersSelected)
         }
-    }
-
-    override fun processIntent(intent: ThirdLabIntent) {
         runCatching {
             when (intent) {
                 is ThirdLabIntent.SetGenerationOption -> changeGenerationOption(intent.option)
@@ -55,7 +55,26 @@ class ThirdLabIntentHandler(
     }
 
     private fun addAllOptions() {
-        for (option in GenerationOptions.entries) changeGenerationOption(option)
+        with(_state.value) {
+            _state.update {
+                if (isAllSelected) {
+                    it.copy(
+                        isDigitsSelected = false,
+                        isLettersSelected = false,
+                        isSpecialCharactersSelected = false,
+                        isAllSelected = false
+                    )
+                } else {
+                    it.copy(
+                        isDigitsSelected = true,
+                        isLettersSelected = true,
+                        isSpecialCharactersSelected = true,
+                        isAllSelected = true
+                    )
+                }
+            }
+        }
+
     }
 
     private fun changeGenerationOption(option: GenerationOptions) {
@@ -69,17 +88,18 @@ class ThirdLabIntentHandler(
 
                 GenerationOptions.Letters -> it.copy(isLettersSelected = !it.isLettersSelected)
             }
+        }.also {
+            configureCharset()
+            updatePasswordLength()
         }
-        configureCharset()
-        updatePasswordLength()
     }
 
     private fun generatePassword() {
         configureCharset()
-        val password = state.value.passwordLength?.let {
+        val password = state.value.passwordLength?.let { length ->
             CharsetBasedPassword(
                 charset = _state.value.actualCharset,
-                requiredLength = it
+                requiredLength = length
             ).generatePassword()
         } ?: error(ThirdLabErrorResults.CharsetEmpty)
         _state.update {

@@ -45,6 +45,7 @@ uiToolingPreviewAndroid = "1.7.4"
 uiTextGoogleFonts = "1.7.4"
 
 nacular-measured = "0.4.1"
+filekit = "0.8.7"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -56,6 +57,8 @@ jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-multip
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 [libraries]
+
+vinceglb-filekit = { module = "io.github.vinceglb:filekit-compose", version.ref = "filekit" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
 espresso-core = { module = "com.android.support.test.espresso:espresso-core", version.ref = "espressoCoreVersion" }
 gradleplugins-android = { module = "com.android.tools.build:gradle", version.ref = "agp" }

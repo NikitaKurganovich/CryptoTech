@@ -20,8 +20,10 @@ import cafe.adriel.voyager.navigator.Navigator
 import dev.crypto.desktop.lab.lab.generated.resources.Res
 import dev.crypto.desktop.lab.lab.generated.resources.first_lab
 import dev.crypto.desktop.lab.lab.generated.resources.second_lab
+import dev.crypto.desktop.lab.lab.generated.resources.third_lab
 import dev.crypto.desktop.lab.ui.MainScreen
 import dev.crypto.desktop.secondlab.SecondLabScreen
+import dev.crypto.desktop.thirdlab.ThirdLabScreen
 import dev.crypto.first.FirstLabScreen
 import dev.crypto.ui.theme.CipherTheme
 import org.jetbrains.compose.resources.stringResource
@@ -76,6 +78,12 @@ fun NavigationRow(
             text = stringResource(Res.string.second_lab),
             navigator = navigator,
             targetScreen = SecondLabScreen()
+        )
+        LabLinkButton(
+            modifier = Modifier,
+            text = stringResource(Res.string.third_lab),
+            navigator = navigator,
+            targetScreen = ThirdLabScreen()
         )
     }
 }

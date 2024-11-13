@@ -3,6 +3,7 @@ package dev.crypto.labthird
 import dev.crypto.base.resources.ResultMessage
 
 data class ThirdLabState(
+    val requirements: PasswordStrengthRequirements,
     val isLettersSelected: Boolean,
     val isDigitsSelected: Boolean,
     val isSpecialCharactersSelected: Boolean,
