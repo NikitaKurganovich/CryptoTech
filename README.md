@@ -1,5 +1,5 @@
 # Crypto-tech
-## Laboratories for Cryptographical Technologies
+## Laboratory works for subject Cryptographic Technologies
 
 # Desktop run:
 ```shell
