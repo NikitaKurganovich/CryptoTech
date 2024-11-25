@@ -3,4 +3,5 @@
     <string name="third_password_includes">Password includes</string>
     <string name="third_generate_button">Generate</string>
     <string name="third_result">Result</string>
+    <string name="third_save_as_file">Save to file</string>
 </resources>

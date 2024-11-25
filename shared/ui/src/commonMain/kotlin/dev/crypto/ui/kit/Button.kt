@@ -5,7 +5,7 @@ import androidx.compose.ui.Modifier
 
 @Composable
 expect fun CipherButton(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     text: String,
     onClick: () -> Unit
 )

@@ -31,7 +31,11 @@ class ThirdLabIntentHandler(
 
     override fun processIntent(intent: ThirdLabIntent) {
         _state.update {
-            it.copy(isAllSelected = it.isDigitsSelected && it.isLettersSelected && it.isSpecialCharactersSelected)
+            it.copy(
+                isAllSelected = it.isDigitsSelected && it.isLettersSelected && it.isSpecialCharactersSelected,
+                isError = false,
+                resultMessage = ResultMessage.StringMessage("")
+            )
         }
         runCatching {
             when (intent) {
@@ -51,7 +55,6 @@ class ThirdLabIntentHandler(
                 )
             }
         }
-
     }
 
     private fun addAllOptions() {
