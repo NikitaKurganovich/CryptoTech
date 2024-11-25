@@ -32,6 +32,9 @@ interface CipherViewDimensions{
 
     val popupButtonWidth: Dp
     val popupButtonHeight: Dp
+
+    val checkboxSize: Dp
+    val checkboxCornerEdgeLength: Dp
 }
 
 
@@ -83,4 +86,9 @@ object StandardViewDimen: CipherViewDimensions {
         get() = 125.dp
     override val popupButtonHeight: Dp
         get() = 48.dp
+
+    override val checkboxSize: Dp
+        get() = 25.dp
+    override val checkboxCornerEdgeLength: Dp
+        get() = 6.dp
 }

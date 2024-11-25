@@ -33,7 +33,7 @@ fun CipherOutlinedTextField(
     modifier: Modifier = Modifier,
     edges: EdgeValues = EdgeValues(
         horizontal = CipherTheme.viewDimensions.inputCornerEdgeWidth,
-    vertical = CipherTheme.viewDimensions.inputCornerEdgeHeight
+        vertical = CipherTheme.viewDimensions.inputCornerEdgeHeight
     ),
     value: String,
     isError: Boolean = false,
@@ -82,16 +82,16 @@ fun CipherOutlinedTextField(
     )
 }
 
-sealed class MockIntent{
-    data class TextChange(val value: String): MockIntent()
+sealed class MockIntent {
+    data class TextChange(val value: String) : MockIntent()
 }
 
-class MockViewModel{
+class MockViewModel {
     private val _state = MutableStateFlow("")
     val state = _state.asStateFlow()
 
-    fun processIntent(intent: MockIntent){
-        when(intent){
+    fun processIntent(intent: MockIntent) {
+        when (intent) {
             is MockIntent.TextChange -> {
                 _state.update { intent.value }
             }
