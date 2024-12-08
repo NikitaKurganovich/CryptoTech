@@ -44,6 +44,7 @@ include(":desktop:lab")
 include(":desktop:feature:firstlab")
 include(":desktop:feature:secondlab")
 include(":desktop:feature:thirdlab")
+include(":desktop:feature:seventhUtility")
 
 include(":android:labFirst")
 include(":android:labsecond")
