@@ -17,7 +17,9 @@ import androidx.compose.ui.window.application
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.CurrentScreen
 import cafe.adriel.voyager.navigator.Navigator
+import dev.crypto.desktop.lab.lab.generated.resources.icon
 import dev.crypto.desktop.lab.lab.generated.resources.Res
+import dev.crypto.desktop.lab.lab.generated.resources.app_name
 import dev.crypto.desktop.lab.lab.generated.resources.first_lab
 import dev.crypto.desktop.lab.lab.generated.resources.second_lab
 import dev.crypto.desktop.lab.lab.generated.resources.third_lab
@@ -26,12 +28,14 @@ import dev.crypto.desktop.secondlab.SecondLabScreen
 import dev.crypto.desktop.thirdlab.ThirdLabScreen
 import dev.crypto.first.FirstLabScreen
 import dev.crypto.ui.theme.CipherTheme
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
-        title = "Crypto"
+        icon = painterResource(Res.drawable.icon),
+        title = stringResource(Res.string.app_name)
     ) {
         CipherTheme {
             Column(
