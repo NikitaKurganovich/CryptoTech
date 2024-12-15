@@ -1,9 +1,10 @@
 package dev.crypto.labfirst.releazation.cipher
 
 import dev.crypto.base.interfaces.Cipher
+import dev.crypto.base.resources.ResultMessage
 import dev.crypto.labfirst.Check
 import dev.crypto.labfirst.FirstLabErrors
-import dev.crypto.labfirst.addGeneratedKey
+import dev.crypto.labfirst.FirstLabResults
 import dev.crypto.labfirst.checkMessage
 import dev.crypto.labfirst.generateMessageResult
 
@@ -11,9 +12,9 @@ class ComplicatedPermutationCipher(
     override val message: String,
     override val key: Pair<List<Int>, List<Int>>,
 ) : Cipher<Pair<List<Int>, List<Int>>> {
-    override fun encrypt(): Result<String> = generateMessageResult(
+    override fun encrypt(): Result<ResultMessage> = generateMessageResult(
         Check(key.first.size * key.second.size != message.length) {
-            error(FirstLabErrors.KeyFormat)
+            error(FirstLabErrors.KeyMultiplication)
         }
     ) {
         val (key1, key2) = key
@@ -37,13 +38,13 @@ class ComplicatedPermutationCipher(
             }
         }
 
-        reorderedGroups.joinToString("") + this.addGeneratedKey()
+        ResultMessage.IdMessage(FirstLabResults.CryptoWithGeneratedKey, arrayOf(reorderedGroups.joinToString(""), key.toString()))
     }
 
-    override fun decrypt(): Result<String> = runCatching {
+    override fun decrypt(): Result<ResultMessage> = runCatching {
         checkMessage(
             Check(key.first.size * key.second.size != message.length) {
-                error(FirstLabErrors.KeyFormat)
+                error(FirstLabErrors.KeyMultiplication)
             },
             string = message,
         ) {
@@ -68,7 +69,7 @@ class ComplicatedPermutationCipher(
                 String(transposedGroup)
             }
 
-            transposedGroups.joinToString("") + this.addGeneratedKey()
+            ResultMessage.IdMessage(FirstLabResults.CryptoWithGeneratedKey, arrayOf(transposedGroups.joinToString(""), key.toString()))
         }
     }
 }

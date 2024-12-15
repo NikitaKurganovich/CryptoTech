@@ -31,6 +31,6 @@ sealed interface ResultMessage {
     @Composable
     fun getString() = when (this) {
         is StringMessage -> message
-        is IdMessage -> stringResource(resource = id.errorRes, formatArgs = args)
+        is IdMessage -> stringResource(resource = id.res, formatArgs = args)
     }
 }

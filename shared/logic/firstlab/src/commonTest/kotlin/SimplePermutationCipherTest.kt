@@ -1,3 +1,4 @@
+import dev.crypto.base.resources.ResultMessage
 import dev.crypto.base.test.TestThat
 import dev.crypto.labfirst.FirstLabErrors
 import dev.crypto.labfirst.releazation.cipher.SimplePermutationCipher
@@ -8,19 +9,24 @@ class SimplePermutationCipherTest {
 
     @Test
     fun `simple check`() {
-        TestThat(SimplePermutationCipher("abc", listOf(2, 3, 1)).encrypt())
-            .assert(Result.success("bca"))
+        TestThat(
+            (SimplePermutationCipher("abc", listOf(2, 3, 1)).encrypt()
+                .getOrNull() as ResultMessage.IdMessage)
+                .args.first()
+        )
+            .assert("bca")
     }
 
     @Test
     fun `complex check`() {
         TestThat(
-            SimplePermutationCipher(
+            (SimplePermutationCipher(
                 "encryption",
                 listOf(3, 8, 1, 5, 2, 7, 6, 4, 10, 9)
-            ).encrypt()
+            ).encrypt().getOrNull() as ResultMessage.IdMessage)
+                .args.first()
         )
-            .assert(Result.success("cieyntprno"))
+            .assert("cieyntprno")
     }
 
     @Test
@@ -31,7 +37,10 @@ class SimplePermutationCipherTest {
                 listOf(3, 8, 1, 5, 2, 7, 6, 4, 10)
             ).encrypt()
         )
-            .assertWithErrorMessage<String>(FirstLabErrors.KeyLength.name)
+            .assertWithErrorMessage<String>(
+                expectedError = FirstLabErrors.KeyLength.name,
+                type = TestThat.ErorrType.IllegalStateException
+            )
     }
 
     @Test
@@ -42,6 +51,31 @@ class SimplePermutationCipherTest {
                 listOf(3, 8, 1, 5, 2, 7, 6, 5, 4, 5, 3, 24)
             ).encrypt()
         )
-            .assertWithErrorMessage<String>(FirstLabErrors.KeyLength.name)
+            .assertWithErrorMessage<String>(
+                expectedError = FirstLabErrors.KeyLength.name,
+                type = TestThat.ErorrType.IllegalStateException
+            )
+    }
+
+    @Test
+    fun `bca become abc`() {
+        TestThat(
+            (SimplePermutationCipher("bca", listOf(2, 3, 1)).decrypt()
+                .getOrNull() as ResultMessage.IdMessage)
+                .args.first()
+        )
+            .assert("abc")
+    }
+
+    @Test
+    fun `cieyntprno become encryption`() {
+        TestThat(
+            (SimplePermutationCipher(
+                "cieyntprno",
+                listOf(3, 8, 1, 5, 2, 7, 6, 4, 10, 9)
+            ).decrypt().getOrNull() as ResultMessage.IdMessage)
+                .args.first()
+        )
+            .assert("encryption")
     }
 }

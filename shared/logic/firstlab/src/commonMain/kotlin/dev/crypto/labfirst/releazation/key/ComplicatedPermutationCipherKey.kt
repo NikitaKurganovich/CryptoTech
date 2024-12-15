@@ -21,7 +21,7 @@ class ComplicatedPermutationCipherKey(override val value: String) :
                 input.split(" ").map { it.toInt() }
             return Pair(first, second)
         } catch (e: Exception) {
-            error(FirstLabErrors.KeyFormat)
+            error(FirstLabErrors.KeyNumberFormat)
         }
     }
 }

@@ -1,7 +1,8 @@
 package dev.crypto.labfirst.releazation.cipher
 
 import dev.crypto.base.interfaces.Cipher
-import dev.crypto.labfirst.addGeneratedKey
+import dev.crypto.base.resources.ResultMessage
+import dev.crypto.labfirst.FirstLabResults
 import dev.crypto.labfirst.checkMessage
 
 class SimpleReplaceCipher(
@@ -10,31 +11,39 @@ class SimpleReplaceCipher(
 ) : Cipher<String> {
     private val alphabet = ('A'..'Z').toList()
 
-    override fun encrypt(): Result<String> = runCatching {
+    override fun encrypt(): Result<ResultMessage> = runCatching {
         checkMessage(
             string = message,
         ) {
-            message.map { char ->
-                val isLowerCase = char.isLowerCase()
-                val index = alphabet.indexOf(char.uppercaseChar())
-                if (index != -1) {
-                    val encryptedChar = key[index]
-                    if (isLowerCase) encryptedChar.lowercaseChar() else encryptedChar
-                } else char
-            }.joinToString("") + this.addGeneratedKey()
+            ResultMessage.IdMessage(
+                FirstLabResults.CryptoWithGeneratedKey,
+                arrayOf(message.map { char ->
+                    val isLowerCase = char.isLowerCase()
+                    val index = alphabet.indexOf(char.uppercaseChar())
+                    if (index != -1) {
+                        val encryptedChar = key[index]
+                        if (isLowerCase) encryptedChar.lowercaseChar() else encryptedChar
+                    } else char
+                }.joinToString(""), key)
+            )
         }
     }
 
-    override fun decrypt(): Result<String> = runCatching {
+    override fun decrypt(): Result<ResultMessage> = runCatching {
         checkMessage(string = message) {
-            message.map { char ->
-                val isLowerCase = char.isLowerCase()
-                val index = key.indexOf(char.lowercaseChar())
-                if (index != -1) {
-                    val encryptedChar = alphabet[index]
-                    if (isLowerCase) encryptedChar.lowercaseChar() else encryptedChar
-                } else char
-            }.joinToString("") + this.addGeneratedKey()
+            ResultMessage.IdMessage(
+                FirstLabResults.CryptoWithGeneratedKey,
+                arrayOf(
+                    message.map { char ->
+                        val isLowerCase = char.isLowerCase()
+                        val index = key.indexOf(char.lowercaseChar())
+                        if (index != -1) {
+                            val decryptedChar = alphabet[index]
+                            if (isLowerCase) decryptedChar.lowercaseChar() else decryptedChar
+                        } else char
+                    }.joinToString(""), key
+                )
+            )
         }
     }
 }

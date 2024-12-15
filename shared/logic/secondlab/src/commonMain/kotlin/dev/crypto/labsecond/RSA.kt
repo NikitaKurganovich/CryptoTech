@@ -1,7 +1,7 @@
 package dev.crypto.labsecond
 
 import dev.crypto.base.interfaces.Cipher
-import kotlin.math.pow
+import dev.crypto.base.resources.ResultMessage
 
 data class RSA(
     override val message: String,
@@ -10,27 +10,31 @@ data class RSA(
     private val n = key.p * key.q
     private val phi = (key.p - 1) * (key.q - 1)
 
-    override fun encrypt(): Result<String> = runWithInitCheck {
-        message.map { char ->
-            val i = char.lowercaseChar() - 'a' + 1
-            i.toBigDecimal().pow(key.e) % n.toBigDecimal()
-        }.joinToString(separator = " ")
+    override fun encrypt(): Result<ResultMessage> = runWithInitCheck {
+        ResultMessage.StringMessage(
+            message.map { char ->
+                val i = char.lowercaseChar() - 'a' + 1
+                i.toBigDecimal().pow(key.e) % n.toBigDecimal()
+            }.joinToString(separator = " ")
+        )
     }
 
-    override fun decrypt(): Result<String> = runWithInitCheck {
+    override fun decrypt(): Result<ResultMessage> = runWithInitCheck {
         val d = generateSequence(1) { it + 1 }.first { (it * key.e) % phi == 1 }
-        message.split(" ")
-            .map { num ->
-                val i = num.toInt()
-                i.toBigDecimal().pow(d) % n.toBigDecimal()
-            }
-            .map { it.toInt() }
-            .map { (it - 1 + 'a'.code).toChar() }.joinToString("")
+        ResultMessage.StringMessage(
+            message.split(" ")
+                .map { num ->
+                    val i = num.toInt()
+                    i.toBigDecimal().pow(d) % n.toBigDecimal()
+                }
+                .map { it.toInt() }
+                .map { (it - 1 + 'a'.code).toChar() }.joinToString("")
+        )
     }
 
     private fun runWithInitCheck(
-        block: () -> String
-    ): Result<String> = runCatching {
+        block: () -> ResultMessage
+    ): Result<ResultMessage> = runCatching {
         require(isPrime(key.p) && isPrime(key.q)) {
             SecondLabErrors.QAndPNotPrime
         }

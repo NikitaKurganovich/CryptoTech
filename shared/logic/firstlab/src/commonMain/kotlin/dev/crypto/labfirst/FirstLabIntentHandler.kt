@@ -114,7 +114,7 @@ class FirstLabIntentHandler : IntentHandler<FirstLabState, FirstLabIntent> {
             message = state.value.messageInputFieldText
         ).createCipher()
             .onSuccess { value ->
-                value.encrypt().onSuccess { setSuccessfulResult(ResultMessage.StringMessage(it)) }
+                value.encrypt().onSuccess { setSuccessfulResult(it) }
                     .onFailure { err -> setError(err) }
             }
             .onFailure { err -> setError(err) }
@@ -127,7 +127,7 @@ class FirstLabIntentHandler : IntentHandler<FirstLabState, FirstLabIntent> {
             message = state.value.messageInputFieldText
         ).createCipher()
             .onSuccess { value ->
-                value.decrypt().onSuccess { setSuccessfulResult(ResultMessage.StringMessage(it)) }
+                value.decrypt().onSuccess { setSuccessfulResult(it) }
                     .onFailure { err -> setError(err) }
             }
             .onFailure { err -> setError(err) }

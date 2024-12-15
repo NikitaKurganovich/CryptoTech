@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import dev.crypto.ui.theme.CipherTheme
 
 @Composable
 actual fun CipherSwitch(
@@ -32,7 +33,10 @@ actual fun CipherSwitch(
                 selected = isFirst,
                 onClick = { onClick(true) }
             )
-            Text(text = firstOptionText)
+            Text(
+                text = firstOptionText,
+                style = CipherTheme.typography.default,
+            )
         }
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -42,7 +46,10 @@ actual fun CipherSwitch(
                 selected = !isFirst,
                 onClick = { onClick(false) }
             )
-            Text(text = secondOptionText)
+            Text(
+                text = secondOptionText,
+                style = CipherTheme.typography.default,
+            )
         }
     }
 }

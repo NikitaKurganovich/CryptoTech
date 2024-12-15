@@ -1,3 +1,4 @@
+import dev.crypto.base.resources.ResultMessage
 import dev.crypto.base.test.TestThat
 import dev.crypto.labfirst.FirstLabErrors
 import dev.crypto.labfirst.releazation.cipher.ComplicatedPermutationCipher
@@ -6,17 +7,31 @@ import org.junit.Test
 
 class ComplicatedPermutationCipherTest {
     @Test
-    fun `a became b`() {
+    fun `encryption became ntpioynecr`() {
         TestThat(
-            ComplicatedPermutationCipher(
+            (ComplicatedPermutationCipher(
                 message = "encryption",
                 key = Pair(
-                    listOf(5, 3, 1, 2, 4),
+                    listOf(5, 2, 1, 3, 4),
                     listOf(2, 1)
                 )
-            ).encrypt()
+            ).encrypt().getOrNull() as ResultMessage.IdMessage).args.first()
         )
-            .assert(Result.success("niptoycenr"))
+            .assert("ntpioynecr")
+    }
+
+    @Test
+    fun `secret became ertesc`() {
+        TestThat(
+            (ComplicatedPermutationCipher(
+                message = "secret",
+                key = Pair(
+                    listOf(2, 1, 3),
+                    listOf(2, 1)
+                )
+            ).encrypt().getOrNull() as ResultMessage.IdMessage).args.first()
+        )
+            .assert("ertesc")
     }
 
     @Test
@@ -31,7 +46,7 @@ class ComplicatedPermutationCipherTest {
             ).encrypt()
         )
             .assertWithErrorMessage<String>(
-                expectedError = FirstLabErrors.KeyFormat.name,
+                expectedError = FirstLabErrors.KeyMultiplication.name,
                 type = TestThat.ErorrType.IllegalStateException
             )
     }
@@ -48,8 +63,36 @@ class ComplicatedPermutationCipherTest {
             ).encrypt()
         )
             .assertWithErrorMessage<String>(
-                expectedError = FirstLabErrors.KeyFormat.name,
+                expectedError = FirstLabErrors.KeyMultiplication.name,
                 type = TestThat.ErorrType.IllegalStateException
             )
+    }
+
+    @Test
+    fun `niptoycenr became encryption`() {
+        TestThat(
+            (ComplicatedPermutationCipher(
+                message = "ntpioynecr",
+                key = Pair(
+                    listOf(5, 2, 1, 3, 4),
+                    listOf(2, 1)
+                )
+            ).decrypt().getOrNull() as ResultMessage.IdMessage).args.first()
+        )
+            .assert("encryption")
+    }
+
+    @Test
+    fun `ertesc became secret`() {
+        TestThat(
+            (ComplicatedPermutationCipher(
+                message = "ertesc",
+                key = Pair(
+                    listOf(2, 1, 3),
+                    listOf(2, 1)
+                )
+            ).encrypt().getOrNull() as ResultMessage.IdMessage).args.first()
+        )
+            .assert("secret")
     }
 }

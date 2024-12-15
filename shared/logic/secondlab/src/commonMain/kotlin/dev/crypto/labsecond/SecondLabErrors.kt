@@ -12,7 +12,7 @@ import dev.crypto.labsecond.resources.second_not_prime_q_and_p_error
 import dev.crypto.labsecond.resources.second_unspecified
 import org.jetbrains.compose.resources.StringResource
 
-enum class SecondLabErrors(override val errorRes: StringResource): CryptoResId {
+enum class SecondLabErrors(override val res: StringResource): CryptoResId {
     Unspecified(SecondLabString.second_unspecified),
 
     LowQAndPProduct(SecondLabString.second_low_p_and_q_product_error),

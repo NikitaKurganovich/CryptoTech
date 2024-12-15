@@ -1,3 +1,5 @@
 <resources>
+    <string name="message_field_label">Message</string>
+    <string name="key_field_label">Key</string>
 
 </resources>

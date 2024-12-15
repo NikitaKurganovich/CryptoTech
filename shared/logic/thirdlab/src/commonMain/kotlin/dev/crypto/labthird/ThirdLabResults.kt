@@ -9,13 +9,13 @@ import org.jetbrains.compose.resources.StringResource
 sealed interface ThirdLabResults : CryptoResId
 
 enum class ThirdLabSuccessResults(
-    override val errorRes: StringResource
+    override val res: StringResource
 ) : ThirdLabResults {
     PasswordGenerated(ThirdLabString.third_password_generated),
 }
 
 enum class ThirdLabErrorResults(
-    override val errorRes: StringResource
+    override val res: StringResource
 ): ThirdLabResults{
     CharsetEmpty(ThirdLabString.third_charset_empty_warning),
     PasswordLengthTooShort(ThirdLabString.third_length_empty_warning)

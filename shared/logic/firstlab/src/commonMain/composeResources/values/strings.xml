@@ -1,10 +1,12 @@
 <resources>
-    <string name="first_generated_key"> (generated key: %1$s)</string>
+    <string name="first_generated_key">%1$s (generated key: %2$s)</string>
 
     <string name="first_mode">Select mode:</string>
 
     <string name="first_message_format_warning">Error: Only a-z characters allowed in message field</string>
-    <string name="first_key_format_warning">Error: Only a-z characters allowed in key field for this cipher method</string>
+    <string name="first_key_string_format_warning">Error: Only a-z characters allowed in key field for this cipher method</string>
+    <string name="first_key_format_warning">Error: Wrong format of the key</string>
+    <string name="first_key_multiplication_warning">Error: n * m have to equal length of message</string>
 
     <string name="first_letters_warning">Error: Only letters in message field are allowed</string>
     <string name="first_key_warning">Error: Only numbers in key field are allowed</string>

@@ -66,7 +66,7 @@ class SecondLabIntentHandler : IntentHandler<SecondLabScreenState, SecondLabInte
         }
 
     private fun perform() {
-        runCatching<String> {
+        runCatching<ResultMessage> {
             val rsa = RSA(
                 message = StringMessage(
                     value = _state.value.messageFieldValue,
