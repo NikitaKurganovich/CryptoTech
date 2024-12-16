@@ -40,7 +40,7 @@ class ThirdLabIntentHandler(
         runCatching {
             when (intent) {
                 is ThirdLabIntent.SetGenerationOption -> changeGenerationOption(intent.option)
-                is ThirdLabIntent.GeneratePassword -> generatePassword()
+                is ThirdLabIntent.GeneratePassword -> generatePassword(intent.block)
                 is ThirdLabIntent.AllOptionsSelected -> addAllOptions()
             }
         }.onFailure { error ->
@@ -96,7 +96,7 @@ class ThirdLabIntentHandler(
         updatePasswordLength()
     }
 
-    private fun generatePassword() {
+    private fun generatePassword(block: (String)-> Unit) {
         configureCharset()
         val password = state.value.passwordLength?.let { length ->
             CharsetBasedPassword(
@@ -112,6 +112,7 @@ class ThirdLabIntentHandler(
                 )
             )
         }
+        block(password)
     }
 
     private fun configureCharset() {

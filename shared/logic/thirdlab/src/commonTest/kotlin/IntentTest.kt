@@ -1,3 +1,4 @@
+import dev.crypto.base.resources.ResultMessage
 import dev.crypto.base.test.TestThat
 import dev.crypto.labthird.BruteForceSpeed
 import dev.crypto.labthird.GenerationOptions
@@ -127,13 +128,33 @@ class IntentHandlerTest {
             ThirdLabIntent.AllOptionsSelected
         )
         intentHandler.processIntent(
-            ThirdLabIntent.GeneratePassword
+            ThirdLabIntent.GeneratePassword {}
         )
         TestThat(
             intentHandler.state.value.passwordLength
         ).assertNotNull()
         println("Password length: ${intentHandler.state.value.passwordLength}")
         println("Password: ${intentHandler.state.value.resultMessage}")
+    }
+
+    @Test
+    fun `on button press success`() {
+        var testString: String? = null
+        intentHandler.processIntent(
+            ThirdLabIntent.AllOptionsSelected
+        )
+        intentHandler.processIntent(
+            ThirdLabIntent.GeneratePassword {
+                testString = it
+            }
+        )
+        TestThat(testString).assertNotNull()
+        TestThat(intentHandler.state.value.resultMessage is ResultMessage.IdMessage).assert(true)
+        TestThat(
+            (intentHandler.state.value.resultMessage as ResultMessage.IdMessage)
+                .args.isNotEmpty()
+        ).assert(true)
+        println((intentHandler.state.value.resultMessage as ResultMessage.IdMessage).args.first())
     }
 
     @Test

@@ -4,12 +4,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Button
-import androidx.compose.material.Checkbox
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -24,7 +23,6 @@ import crypto_decoding.desktop.feature.thirdlab.generated.resources.third_passwo
 import crypto_decoding.desktop.feature.thirdlab.generated.resources.third_password_length
 import crypto_decoding.desktop.feature.thirdlab.generated.resources.third_search_speed
 import crypto_decoding.desktop.feature.thirdlab.generated.resources.third_time_to_search
-import dev.crypto.base.resources.ResultMessage
 import dev.crypto.labthird.GenerationOptions
 import dev.crypto.labthird.ThirdLabIntent
 import dev.crypto.labthird.ThirdLabState
@@ -81,7 +79,7 @@ class ThirdLabScreen : Screen {
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.Start
         ) {
             DefaultCheckbox(
                 text = stringResource(ThirdLabString.third_letters),
@@ -112,26 +110,18 @@ class ThirdLabScreen : Screen {
                 }
             )
 
-            val launcher = rememberFileSaverLauncher {
+            val launcher = rememberFileSaverLauncher {}
 
-            }
-            val args by remember(model) {
-                derivedStateOf {
-                    if (model.resultMessage is ResultMessage.IdMessage) {
-                        (model.resultMessage as ResultMessage.IdMessage).args
-                    } else emptyArray()
-                }
-            }
             Button(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
                 onClick = {
-                    onIntent(ThirdLabIntent.GeneratePassword)
-                    if (args.isNotEmpty()) {
+                    onIntent(ThirdLabIntent.GeneratePassword {
                         launcher.launch(
-                            bytes = args.first().toString().toByteArray(),
+                            bytes = it.toByteArray(),
                             baseName = "password",
                             extension = "txt"
                         )
-                    }
+                    })
                 }
             ) {
                 Text(stringResource(ThirdLabString.third_go))

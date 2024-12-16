@@ -81,7 +81,7 @@ private fun ScreenContent(
                 .padding(vertical = CipherTheme.dimensions.largeDefault),
             text = stringResource(R.string.third_generate_button)
         ) {
-            onIntentReceived(ThirdLabIntent.GeneratePassword)
+            onIntentReceived(ThirdLabIntent.GeneratePassword{})
         }
         CipherResultView(
             infoText = stringResource(R.string.third_result),
