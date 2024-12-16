@@ -12,9 +12,9 @@
     <string name="first_key_warning">Error: Only numbers in key field are allowed</string>
     <string name="first_key_length_warning">Error: Length of key is not correct</string>
     <string name="first_length_warning">Error: Length of key must be more than 1</string>
-    <string name="first_empty_message_warning">Error: Message field can\'t be empty</string>
+    <string name="first_empty_message_warning">Error: Message field can't be empty</string>
     <string name="first_numbers_warning">Error: Only numbers in key field are allowed for this cipher method</string>
-    <string name="first_empty_key_warning">Error: Key field can\'t be empty</string>
+    <string name="first_empty_key_warning">Error: Key field can't be empty</string>
 
     <string name="first_welcome">Enter a message and a key</string>
 

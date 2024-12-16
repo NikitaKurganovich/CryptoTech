@@ -1,7 +1,9 @@
+import dev.crypto.base.resources.ResultMessage
 import dev.crypto.base.test.TestThat
 import dev.crypto.base.test.TestThat.ErorrType
 import dev.crypto.labsecond.IntKeyTriplet
 import dev.crypto.labsecond.RSA
+import dev.crypto.labsecond.SecondLabErrors
 import kotlin.test.Test
 
 class RSATest {
@@ -18,7 +20,7 @@ class RSATest {
                     e = 7
                 )
             ).encrypt()
-        ).assert(Result.success("9 1 29"))
+        ).assert(Result.success(ResultMessage.StringMessage("9 1 29")))
     }
 
     @Test
@@ -32,7 +34,7 @@ class RSATest {
                     e = 5
                 )
             ).encrypt()
-        ).assert(Result.success("8 10 17 17 15"))
+        ).assert(Result.success(ResultMessage.StringMessage("8 10 17 17 15")))
     }
 
     @Test
@@ -46,7 +48,7 @@ class RSATest {
                     e = 7
                 )
             ).encrypt()
-        ).assert(Result.success("49 5 42 15 5 17"))
+        ).assert(Result.success(ResultMessage.StringMessage("49 5 42 15 5 17")))
     }
 
     @Test
@@ -61,9 +63,23 @@ class RSATest {
                 )
             ).encrypt()
         ).assertWithErrorMessage<String>(
-            expectedError = "p and q must be prime numbers",
+            expectedError = SecondLabErrors.QAndPNotPrime.name,
             type = ErorrType.IllegalArgumentException
         )
+    }
+
+    @Test
+    fun `p = 11 q = 11 e = 11 message = secret and result = 118 27 3 40 27 9`(){
+        TestThat(
+            RSA(
+                message = "secret",
+                key = IntKeyTriplet(
+                    p = 11,
+                    q = 11,
+                    e = 11
+                )
+            ).encrypt()
+        ).assert(Result.success(ResultMessage.StringMessage("118 27 3 40 27 9")))
     }
 
     @Test
@@ -78,7 +94,7 @@ class RSATest {
                 )
             ).encrypt()
         ).assertWithErrorMessage<String>(
-            expectedError = "e must be coprime with Φ = (p - 1) * (q - 1)",
+            expectedError = SecondLabErrors.ENotCoprime.name,
             type = ErorrType.IllegalArgumentException
         )
     }
@@ -96,7 +112,7 @@ class RSATest {
                     e = 7
                 )
             ).decrypt()
-        ).assert(Result.success("cab"))
+        ).assert(Result.success(ResultMessage.StringMessage("cab")))
     }
 
     @Test
@@ -110,7 +126,7 @@ class RSATest {
                     e = 5
                 )
             ).decrypt()
-        ).assert(Result.success("hello"))
+        ).assert(Result.success(ResultMessage.StringMessage("hello")))
     }
 
     @Test
@@ -124,7 +140,7 @@ class RSATest {
                     e = 7
                 )
             ).decrypt()
-        ).assert(Result.success("doctor"))
+        ).assert(Result.success(ResultMessage.StringMessage("doctor")))
     }
 
     @Test
@@ -139,7 +155,7 @@ class RSATest {
                 )
             ).decrypt()
         ).assertWithErrorMessage<String>(
-            expectedError = "e must be coprime with Φ = (p - 1) * (q - 1)",
+            expectedError = SecondLabErrors.ENotCoprime.name,
             type = ErorrType.IllegalArgumentException
         )
     }

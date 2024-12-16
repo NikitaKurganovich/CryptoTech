@@ -85,12 +85,12 @@ class SecondLabIntentHandler : IntentHandler<SecondLabScreenState, SecondLabInte
         }.processResult()
     }
 
-    private fun <T> Result<T>.processResult() =
+    private fun <T : ResultMessage> Result<T>.processResult() =
         this.onSuccess { newValue ->
             _state.update {
                 it.copy(
                     isError = false,
-                    result = ResultMessage.StringMessage(newValue.toString())
+                    result = newValue
                 )
             }
         }
@@ -99,8 +99,8 @@ class SecondLabIntentHandler : IntentHandler<SecondLabScreenState, SecondLabInte
                     it.copy(
                         isError = true,
                         result = ResultMessage.IdMessage(
-                            id = error.message?.let {
-                                SecondLabErrors.valueOf(it)
+                            id = error.message?.let { err ->
+                                SecondLabErrors.valueOf(err)
                             } ?: SecondLabErrors.Unspecified
                         )
                     )

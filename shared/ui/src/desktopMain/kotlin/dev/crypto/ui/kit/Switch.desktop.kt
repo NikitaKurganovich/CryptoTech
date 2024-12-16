@@ -23,7 +23,7 @@ actual fun CipherSwitch(
         modifier = modifier
             .wrapContentSize(),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.Start
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,

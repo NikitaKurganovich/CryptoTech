@@ -6,12 +6,10 @@ import androidkit.kit.CipherSwitch
 import androidkit.kit.CipherText
 import dev.crypto.ui.theme.CipherTheme
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -37,7 +35,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun MainScreen(
     viewModel: MainScreenViewModel = viewModel()
-){
+) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     CipherScreen {
         ScreenContent(
@@ -53,7 +51,7 @@ fun MainScreen(
 fun ScreenContent(
     state: SecondLabScreenState,
     onIntentReceived: (SecondLabIntent) -> Unit,
-){
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -78,22 +76,20 @@ fun ScreenContent(
             modifier = Modifier
                 .fillMaxWidth(),
             text = stringResource(SecondLabString.second_button_action),
-            onClick =  { onIntentReceived(SecondLabIntent.Perform) }
+            onClick = { onIntentReceived(SecondLabIntent.Perform) }
         )
-        SelectionContainer {
-            CipherResultView(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                infoText = stringResource(SecondLabString.second_result),
-                resultText = state.result.getString(),
-                isError = remember(state.isError) { state.isError }
-            )
-        }
+        CipherResultView(
+            modifier = Modifier
+                .fillMaxWidth(),
+            infoText = stringResource(SecondLabString.second_result),
+            resultText = state.result.getString(),
+            isError = remember(state.isError) { state.isError }
+        )
     }
 }
 
 @Composable
-private fun ColumnScope.InputFields(
+private fun InputFields(
     state: SecondLabScreenState,
     onIntentReceived: (SecondLabIntent) -> Unit
 ) {

@@ -30,13 +30,6 @@ class ThirdLabIntentHandler(
     override val state: StateFlow<ThirdLabState> = _state.asStateFlow()
 
     override fun processIntent(intent: ThirdLabIntent) {
-        _state.update {
-            it.copy(
-                isAllSelected = it.isDigitsSelected && it.isLettersSelected && it.isSpecialCharactersSelected,
-                isError = false,
-                resultMessage = ResultMessage.StringMessage("")
-            )
-        }
         runCatching {
             when (intent) {
                 is ThirdLabIntent.SetGenerationOption -> changeGenerationOption(intent.option)
@@ -81,6 +74,13 @@ class ThirdLabIntentHandler(
     }
 
     private fun changeGenerationOption(option: GenerationOptions) {
+        changeStateViaOption(option)
+        adjustSelection()
+        configureCharset()
+        updatePasswordLength()
+    }
+
+    private fun changeStateViaOption(option: GenerationOptions) {
         _state.update {
             when (option) {
                 GenerationOptions.Digits ->
@@ -92,8 +92,16 @@ class ThirdLabIntentHandler(
                 GenerationOptions.Letters -> it.copy(isLettersSelected = !it.isLettersSelected)
             }
         }
-        configureCharset()
-        updatePasswordLength()
+    }
+
+    private fun adjustSelection() {
+        _state.update {
+            it.copy(
+                isAllSelected = it.isDigitsSelected && it.isLettersSelected && it.isSpecialCharactersSelected,
+                isError = false,
+                resultMessage = ResultMessage.StringMessage("")
+            )
+        }
     }
 
     private fun generatePassword(block: (String)-> Unit) {

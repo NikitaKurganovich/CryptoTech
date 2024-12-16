@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import dev.crypto.ui.theme.CipherTheme
@@ -28,16 +29,18 @@ actual fun CipherResultView(
                 .padding(bottom = CipherTheme.dimensions.smallPlus),
             text = infoText
         )
-        CipherTextWithBord(
-            modifier = Modifier
-                .fillMaxWidth()
-                .size(
-                    width = CipherTheme.viewDimensions.resultFieldWidth,
-                    height = CipherTheme.viewDimensions.resultFieldHeight
-                )
-                .padding(top = CipherTheme.dimensions.smallPlus),
-            text = resultText,
-            isError = isError
-        )
+        SelectionContainer {
+            CipherTextWithBord(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .size(
+                        width = CipherTheme.viewDimensions.resultFieldWidth,
+                        height = CipherTheme.viewDimensions.resultFieldHeight
+                    )
+                    .padding(top = CipherTheme.dimensions.smallPlus),
+                text = resultText,
+                isError = isError
+            )
+        }
     }
 }

@@ -13,8 +13,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import crypto_decoding.desktop.feature.thirdlab.generated.resources.Res
@@ -34,6 +32,7 @@ import dev.crypto.labthird.resources.third_letters
 import dev.crypto.labthird.resources.third_result
 import dev.crypto.labthird.resources.third_special_characters_desktop
 import dev.crypto.ui.kit.CipherResultView
+import dev.crypto.ui.theme.CipherTheme
 import io.github.vinceglb.filekit.compose.rememberFileSaverLauncher
 import org.jetbrains.compose.resources.stringResource
 
@@ -124,7 +123,10 @@ class ThirdLabScreen : Screen {
                     })
                 }
             ) {
-                Text(stringResource(ThirdLabString.third_go))
+                Text(
+                    stringResource(ThirdLabString.third_go),
+                    style = CipherTheme.typography.default
+                )
             }
         }
     }
@@ -145,7 +147,10 @@ class ThirdLabScreen : Screen {
                 checked = isChecked,
                 onCheckedChange = onCheckChange
             )
-            DefaultText(text)
+            Text(
+                text = text,
+                style = CipherTheme.typography.default
+            )
         }
     }
 
@@ -157,44 +162,31 @@ class ThirdLabScreen : Screen {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            TitleText(stringResource(Res.string.third_password_config))
+            Text(
+                text = stringResource(Res.string.third_password_config),
+                style = CipherTheme.typography.bold
+            )
             with(model.requirements) {
-                DefaultText(stringResource(Res.string.third_find_chance, probability))
-                DefaultText(stringResource(Res.string.third_search_speed, bruteForceSpeed))
-                DefaultText(stringResource(Res.string.third_time_to_search, timeToBruteForce))
+                Text(
+                    text = stringResource(Res.string.third_find_chance, probability),
+                    style = CipherTheme.typography.default
+                )
+                Text(
+                    text = stringResource(Res.string.third_search_speed, bruteForceSpeed),
+                    style = CipherTheme.typography.default
+                )
+                Text(
+                    text = stringResource(Res.string.third_time_to_search, timeToBruteForce),
+                    style = CipherTheme.typography.default
+                )
             }
-            DefaultText(
-                stringResource(
+            Text(
+                text = stringResource(
                     Res.string.third_password_length,
                     model.passwordLength ?: "?"
-                )
+                ),
+                style = CipherTheme.typography.default
             )
         }
-    }
-
-    @Composable
-    fun TitleText(
-        text: String
-    ) {
-        Text(
-            text = text,
-            style = TextStyle(
-                fontSize = 22.sp,
-                lineHeight = 28.sp
-            )
-        )
-    }
-
-    @Composable
-    private fun DefaultText(
-        text: String,
-    ) {
-        Text(
-            text = text,
-            style = TextStyle(
-                fontSize = 16.sp,
-                lineHeight = 24.sp
-            )
-        )
     }
 }

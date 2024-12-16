@@ -72,7 +72,7 @@ class MainScreenViewModel : ViewModel() {
         }
 
     private fun perform() {
-        runCatching<String> {
+        runCatching<ResultMessage> {
             val rsa = RSA(
                 message = StringMessage(
                     value = _state.value.messageFieldValue,
@@ -91,12 +91,12 @@ class MainScreenViewModel : ViewModel() {
         }.processResult()
     }
 
-    private fun <T> Result<T>.processResult() =
+    private fun <T: ResultMessage> Result<T>.processResult() =
         this.onSuccess { newValue ->
             _state.update {
                 it.copy(
                     isError = false,
-                    result = ResultMessage.StringMessage(newValue.toString())
+                    result = newValue
                 )
             }
         }
@@ -105,8 +105,8 @@ class MainScreenViewModel : ViewModel() {
                     it.copy(
                         isError = true,
                         result = ResultMessage.IdMessage(
-                            id = error.message?.let {
-                                SecondLabErrors.valueOf(it)
+                            id = error.message?.let { err ->
+                                SecondLabErrors.valueOf(err)
                             } ?: SecondLabErrors.Unspecified
                         )
                     )

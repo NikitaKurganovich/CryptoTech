@@ -28,7 +28,7 @@ data class RSA(
                     i.toBigDecimal().pow(d) % n.toBigDecimal()
                 }
                 .map { it.toInt() }
-                .map { (it - 1 + 'a'.code).toChar() }.joinToString("")
+                .map { Char(it - 1 + 'a'.code) }.joinToString("")
         )
     }
 

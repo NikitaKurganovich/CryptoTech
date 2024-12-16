@@ -173,7 +173,8 @@ class FirstLabScreen : Screen {
                 Text(
                     modifier = Modifier,
                     textAlign = TextAlign.Center,
-                    text = stringResource(FirstLabRes.first_ok)
+                    text = stringResource(FirstLabRes.first_ok),
+                    style = CipherTheme.typography.default
                 )
             }
         }

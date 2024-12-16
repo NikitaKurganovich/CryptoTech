@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.crypto.ui.theme.CipherTheme
 
@@ -46,6 +47,7 @@ actual fun CipherResultView(
             SelectionContainer {
                 Text(
                     text = resultText,
+                    textAlign = TextAlign.Center,
                     style = CipherTheme.typography.default,
                     color = if (isError) CipherTheme.colors.textError else CipherTheme.colors.text
                 )
