@@ -5,6 +5,7 @@ lifecycleRuntimeKtxVersion = "2.8.5"
 lifecycleViewmodelCompose = "2.8.7"
 lifecycleViewmodelComposeVersion = "2.8.6"
 material3 = "1.3.1"
+proguardGradle = "7.6.1"
 runner = "1.0.2"
 targetSdk = "35"
 minSdk = "23"
@@ -54,10 +55,10 @@ jetbrains-kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", ve
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
-kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 [libraries]
 
+proguard-gradle = { module = "com.guardsquare:proguard-gradle", version.ref = "proguardGradle" }
 vinceglb-filekit = { module = "io.github.vinceglb:filekit-compose", version.ref = "filekit" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
 espresso-core = { module = "com.android.support.test.espresso:espresso-core", version.ref = "espressoCoreVersion" }

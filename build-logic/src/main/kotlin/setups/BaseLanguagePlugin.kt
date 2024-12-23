@@ -13,7 +13,6 @@ internal class BaseLanguagePlugin: Plugin<Project> {
         with(project) {
             with(pluginManager) {
                 apply(libs.plugins.jetbrains.kotlin.multiplatform.get().pluginId)
-                apply(libs.plugins.kotlinx.serialization.get().pluginId)
             }
 
             with(extensions.getByType(KotlinMultiplatformExtension::class.java)) {

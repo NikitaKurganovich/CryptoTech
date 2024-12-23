@@ -63,7 +63,6 @@ fun MainScreen(
     model: MainScreenViewModel = viewModel()
 ) {
     val state by model.state.collectAsState()
-
     CipherScreen {
         ScreenContent(
             modifier = modifier,

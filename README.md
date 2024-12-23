@@ -8,5 +8,7 @@
 
 # Desktop release:
 ```shell
-./gradlew desktop:lab:packageUberJarForCurrentOS
+./gradlew desktop:lab:packageReleaseUberJarForCurrentOS
+./gradlew desktop:lab:createReleaseDistributable
+./gradlew desktop:lab:packageReleaseDistributionForCurrentOS
 ```
