@@ -1,6 +1,7 @@
 package dev.crypto.desktop.seventhutility
 
 import dev.crypto.base.interfaces.Cipher
+import dev.crypto.base.resources.ResultMessage
 import dev.crypto.labsecond.IntKeyTriplet
 import dev.crypto.labsecond.SecondLabErrors
 
@@ -12,18 +13,18 @@ class RSACalculation(
     private val n = key.p * key.q
     private val phi = (key.p - 1) * (key.q - 1)
 
-    override fun encrypt(): Result<String> = runWithInitCheck {
-        "${key.e},$n"
+    override fun encrypt(): Result<ResultMessage> = runWithInitCheck {
+        ResultMessage.StringMessage("${key.e},$n")
     }
 
-    override fun decrypt(): Result<String> = runWithInitCheck {
+    override fun decrypt(): Result<ResultMessage> = runWithInitCheck {
         val d = generateSequence(1) { it + 1 }.first { (it * key.e) % phi == 1 }
-        "$d,$n,$phi"
+        ResultMessage.StringMessage("$d,$n,$phi")
     }
 
     private fun runWithInitCheck(
-        block: () -> String
-    ): Result<String> = runCatching {
+        block: () -> ResultMessage
+    ): Result<ResultMessage> = runCatching {
         require(isPrime(key.p) && isPrime(key.q)) {
             SecondLabErrors.QAndPNotPrime
         }

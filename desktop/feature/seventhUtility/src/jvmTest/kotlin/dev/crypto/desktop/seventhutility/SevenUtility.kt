@@ -1,11 +1,12 @@
 package dev.crypto.desktop.seventhutility
 
+import dev.crypto.base.resources.ResultMessage
 import dev.crypto.labsecond.IntKeyTriplet
 import java.math.BigDecimal
 import kotlin.test.Test
 
 /**
- *  This class have to be test enviroment, as all values won't mutate
+ *  This class have to be test environment, as all values won't mutate
  */
 class SevenUtility {
     private val rsa = RSACalculation(
@@ -23,19 +24,19 @@ class SevenUtility {
 
     @Test
     fun `generate keys`() {
-        val eAndN = rsa.encrypt().getOrNull()?.splitToSequence(",")
+        val eAndN = (rsa.encrypt().getOrNull() as ResultMessage.StringMessage).message.splitToSequence(",")
 
-        eAndN?.let {
+        eAndN.let {
             println("{e, n}: {${it.first()}, ${it.last()}}")
         }
-        val dAndNAndPhi = rsa.decrypt().getOrNull()?.splitToSequence(",")?.toList()
+        val dAndNAndPhi = (rsa.decrypt().getOrNull() as ResultMessage.StringMessage).message.splitToSequence(",").toList()
 
-        dAndNAndPhi?.let {
-            println("{d, n, phi} = {${it[0]}, ${it[1]}, ${it[2]}}")
+        dAndNAndPhi.let {
+            println("{d, n, phi} = {${it.first()}, ${it[1]}, ${it.last()}}")
         }
-        val e = eAndN?.first()?.toInt() ?: error("E is null")
+        val e = eAndN.first().toInt()
         val n = eAndN.last().toBigDecimal()
-        val d = dAndNAndPhi?.first()?.toInt() ?: error("D is null")
+        val d = dAndNAndPhi.first().toInt()
 
         val cList = `find c list`(e = e, n = n)
         cList.forEachIndexed { i: Int, bigDecimal: BigDecimal ->
